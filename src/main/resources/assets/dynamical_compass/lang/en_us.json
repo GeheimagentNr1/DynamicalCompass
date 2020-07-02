@@ -1,0 +1,7 @@
+{
+	"main_module": "Main",
+		"main_items": "Items",
+			"item.dynamical_compass.dynamical_compass": "Dynamical Compass",
+		"main_item_groups": "Item Groups",
+			"itemGroup.dynamical_compass": "Dynamical Compass"
+}

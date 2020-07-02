@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "dynamical_compass:item/dynamical_compass_03"
+    }
+}
