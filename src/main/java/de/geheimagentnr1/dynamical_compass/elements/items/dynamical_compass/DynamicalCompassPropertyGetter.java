@@ -21,15 +21,6 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	
 	
 	@OnlyIn( Dist.CLIENT )
-	private double rotation;
-	
-	@OnlyIn( Dist.CLIENT )
-	private double rota;
-	
-	@OnlyIn( Dist.CLIENT )
-	private long lastUpdateTick;
-	
-	@OnlyIn( Dist.CLIENT )
 	@Override
 	public float call( @Nonnull ItemStack stack, @Nullable World world, @Nullable LivingEntity livingEntity ) {
 		
