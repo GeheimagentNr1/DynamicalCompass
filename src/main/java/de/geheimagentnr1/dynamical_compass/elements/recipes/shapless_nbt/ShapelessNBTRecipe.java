@@ -109,7 +109,7 @@ public class ShapelessNBTRecipe implements ICraftingRecipe {
 		if( merge_nbt ) {
 			for( int j = 0; j < inv.getSizeInventory(); ++j ) {
 				ItemStack itemstack = inv.getStackInSlot( j );
-				if( itemstack.getItem() == recipeOutput.getItem() )  {
+				if( itemstack.getItem() == recipeOutput.getItem() ) {
 					ItemStack result = recipeOutput.copy();
 					result.getOrCreateTag().merge( itemstack.getOrCreateTag() );
 					return result;
