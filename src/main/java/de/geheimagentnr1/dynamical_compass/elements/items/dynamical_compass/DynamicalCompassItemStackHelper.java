@@ -12,6 +12,7 @@ import java.util.Objects;
 
 public class DynamicalCompassItemStackHelper {
 	
+	
 	private static final String destinationName = "destination";
 	
 	private static final String dimensionName = "destination_dimension";
@@ -36,7 +37,6 @@ public class DynamicalCompassItemStackHelper {
 			.toString() );
 		compound.put( posName, NBTUtil.writeBlockPos( pos ) );
 		stack.getOrCreateTag().put( destinationName, compound );
-		setLocked( stack );
 	}
 	
 	public static boolean isDimensionEqual( ItemStack stack, World world ) {
@@ -48,11 +48,6 @@ public class DynamicalCompassItemStackHelper {
 	public static BlockPos getDestinationPos( ItemStack stack ) {
 		
 		return NBTUtil.readBlockPos( stack.getOrCreateTag().getCompound( destinationName ).getCompound( posName ) );
-	}
-	
-	public static void setLocked( ItemStack stack ) {
-		
-		stack.getOrCreateTag().putBoolean( lockedName, true );
 	}
 	
 	public static boolean isLocked( ItemStack stack ) {

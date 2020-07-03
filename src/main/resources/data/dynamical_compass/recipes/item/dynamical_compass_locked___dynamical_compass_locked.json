@@ -1,0 +1,16 @@
+{
+	"type": "dynamical_compass:crafting_shapeless_nbt",
+	"ingredients": [
+		{
+			"item": "dynamical_compass:dynamical_compass"
+		},
+		{
+			"item": "minecraft:glass_pane"
+		}
+	],
+	"result": {
+		"item": "dynamical_compass:dynamical_compass",
+		"nbt": "{locked:true}",
+		"merge_nbt": true
+	}
+}

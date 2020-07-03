@@ -2,7 +2,6 @@ package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
 import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -10,6 +9,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -33,7 +33,8 @@ public class DynamicalCompass extends Item {
 	public void addInformation( @Nonnull ItemStack stack, @Nullable World worldIn,
 		@Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn ) {
 		
-		tooltip.add( new StringTextComponent( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) ) );
+		tooltip.add( new StringTextComponent( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
+			.applyTextStyle( TextFormatting.GRAY) );
 	}
 	
 	@Nonnull

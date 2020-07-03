@@ -5,7 +5,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
-import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompass;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassItemStackHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -26,7 +25,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import java.util.Collection;
 
 
-public class GiveDC {
+public class GiveDCCommand {
 	
 	
 	public static void register( CommandDispatcher<CommandSource> dispatcher ) {
@@ -36,7 +35,7 @@ public class GiveDC {
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.getDimension() )
-					.executes( GiveDC::giveDC ) ) ) );
+					.executes( GiveDCCommand::giveDC ) ) ) );
 		dispatcher.register( giveDC );
 	}
 	
