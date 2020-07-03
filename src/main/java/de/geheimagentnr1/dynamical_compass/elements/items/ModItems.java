@@ -18,7 +18,7 @@ public class ModItems {
 	
 	public final static Item[] ITEMS = {
 		//Dynamical Compass
-		new DynamicalCompass(),//FIN_T
+		new DynamicalCompass(),//FINRT
 	};
 	
 	//Dynamical Compass
