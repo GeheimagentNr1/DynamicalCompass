@@ -1,5 +1,6 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
@@ -22,13 +23,15 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	
 	@OnlyIn( Dist.CLIENT )
 	@Override
-	public float call( @Nonnull ItemStack stack, @Nullable World world, @Nullable LivingEntity livingEntity ) {
+	public float call( @Nonnull ItemStack stack, @Nullable ClientWorld clientWorld,
+		@Nullable LivingEntity livingEntity ) {
 		
 		if( livingEntity == null && !stack.isOnItemFrame() ) {
 			return 0.0F;
 		} else {
 			boolean isLivingEntityNotNull = livingEntity != null;
 			Entity entity = Objects.requireNonNull( isLivingEntityNotNull ? livingEntity : stack.getItemFrame() );
+			World world = clientWorld;
 			if( world == null ) {
 				world = entity.world;
 			}

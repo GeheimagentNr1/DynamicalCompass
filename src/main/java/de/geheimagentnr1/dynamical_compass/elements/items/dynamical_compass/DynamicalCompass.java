@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -27,7 +26,6 @@ public class DynamicalCompass extends Item {
 		
 		super( new Item.Properties().group( DynamicalCompassMod.setup.dynamicalCompassItemGroup ) );
 		setRegistryName( registry_name );
-		addPropertyOverride( new ResourceLocation( "angle" ), new DynamicalCompassPropertyGetter() );
 	}
 	
 	@Override
@@ -35,7 +33,7 @@ public class DynamicalCompass extends Item {
 		@Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn ) {
 		
 		tooltip.add( new StringTextComponent( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
-			.applyTextStyle( TextFormatting.GRAY ) );
+			.func_240699_a_( TextFormatting.GRAY ) );
 	}
 	
 	@Nonnull

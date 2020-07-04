@@ -18,10 +18,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.Collection;
 
@@ -45,9 +44,8 @@ public class GiveDCCommand {
 		
 		CommandSource source = context.getSource();
 		Collection<ServerPlayerEntity> playerEntities = EntityArgument.getPlayers( context, "targets" );
-		ServerWorld world = ServerLifecycleHooks.getCurrentServer().getWorld(
-			DimensionArgument.getDimensionArgument( context, "dimension" ) );
-		Vec2f vecPos = Vec2Argument.getVec2f( context, "destination" );
+		ServerWorld world = DimensionArgument.getDimensionArgument( context, "dimension" );
+		Vector2f vecPos = Vec2Argument.getVec2f( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
 		boolean locked = BoolArgumentType.getBool( context, "locked" );
 		
