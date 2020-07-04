@@ -1,10 +1,12 @@
 package de.geheimagentnr1.dynamical_compass.elements.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
+import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompass;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassItemStackHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -13,6 +15,7 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.Vec2Argument;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -35,7 +38,8 @@ public class GiveDCCommand {
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.getDimension() )
-					.executes( GiveDCCommand::giveDC ) ) ) );
+					.then( Commands.argument( "locked", BoolArgumentType.bool() )
+						.executes( GiveDCCommand::giveDC ) ) ) ) );
 		dispatcher.register( giveDC );
 	}
 	
@@ -47,10 +51,10 @@ public class GiveDCCommand {
 			DimensionArgument.getDimensionArgument( context, "dimension" ) );
 		Vec2f vecPos = Vec2Argument.getVec2f( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
+		boolean locked = BoolArgumentType.getBool( context, "locked" );
 		
 		for( ServerPlayerEntity player : playerEntities ) {
-			ItemStack stack = new ItemStack( ModItems.DYNAMICAL_COMPASS );
-			DynamicalCompassItemStackHelper.setDimensionAndPos( stack, world, pos );
+			ItemStack stack = createItemstack( world, pos, locked );
 			boolean couldAdd = player.inventory.addItemStackToInventory( stack );
 			ItemEntity entity;
 			if( couldAdd && stack.isEmpty() ) {
@@ -71,8 +75,7 @@ public class GiveDCCommand {
 				}
 			}
 		}
-		ItemStack stack = new ItemStack( ModItems.DYNAMICAL_COMPASS );
-		DynamicalCompassItemStackHelper.setDimensionAndPos( stack, world, pos );
+		ItemStack stack = createItemstack( world, pos, locked );
 		if( playerEntities.size() == 1 ) {
 			source.sendFeedback( new TranslationTextComponent( "commands.give.success.single",
 				1, stack.getTextComponent(), playerEntities.iterator().next().getDisplayName() ), true );
@@ -81,5 +84,13 @@ public class GiveDCCommand {
 				1, stack.getTextComponent(), playerEntities.size() ), true );
 		}
 		return playerEntities.size();
+	}
+	
+	private static ItemStack createItemstack( ServerWorld world, BlockPos pos, boolean locked ) {
+		
+		ItemStack stack = new ItemStack( ModItems.DYNAMICAL_COMPASS );
+		DynamicalCompassItemStackHelper.setDimensionAndPos( stack, world, pos );
+		DynamicalCompassItemStackHelper.setLocked( stack, locked );
+		return stack;
 	}
 }

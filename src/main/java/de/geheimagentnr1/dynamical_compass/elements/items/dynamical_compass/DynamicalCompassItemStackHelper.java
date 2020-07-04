@@ -55,6 +55,11 @@ public class DynamicalCompassItemStackHelper {
 		return stack.getOrCreateTag().getBoolean( lockedName );
 	}
 	
+	public static void setLocked( ItemStack stack, boolean locked ) {
+		
+		stack.getOrCreateTag().putBoolean( lockedName, locked );
+	}
+	
 	public static void setRotationRotaAndLastUpdateTick( ItemStack stack, double rotation, double rota,
 		long lastUpdateTick ) {
 		
