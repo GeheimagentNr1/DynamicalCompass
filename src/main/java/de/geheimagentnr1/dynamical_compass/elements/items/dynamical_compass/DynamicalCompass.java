@@ -2,6 +2,7 @@ package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
 import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -41,7 +42,8 @@ public class DynamicalCompass extends Item {
 	@Override
 	public ActionResultType onItemUse( ItemUseContext context ) {
 		
-		if( context.isPlacerSneaking() && !DynamicalCompassItemStackHelper.isLocked( context.getItem() ) ) {
+		PlayerEntity player = context.getPlayer();
+		if( player != null && player.isSneaking() && !DynamicalCompassItemStackHelper.isLocked( context.getItem() ) ) {
 			DynamicalCompassItemStackHelper.setDimensionAndPos( context.getItem(), context.getWorld(),
 				context.getPos() );
 			return ActionResultType.SUCCESS;

@@ -77,6 +77,6 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	private double getSpawnToAngle( ItemStack stack, Entity entity ) {
 		
 		BlockPos blockpos = DynamicalCompassItemStackHelper.getDestinationPos( stack );
-		return StrictMath.atan2( blockpos.getZ() - entity.posZ, blockpos.getX() - entity.posX );
+		return StrictMath.atan2( blockpos.getZ() - entity.getPosZ(), blockpos.getX() - entity.getPosX() );
 	}
 }

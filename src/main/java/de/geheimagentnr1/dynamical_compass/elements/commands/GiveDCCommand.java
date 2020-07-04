@@ -6,7 +6,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
-import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompass;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassItemStackHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -15,7 +14,6 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.Vec2Argument;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -47,7 +45,7 @@ public class GiveDCCommand {
 		
 		CommandSource source = context.getSource();
 		Collection<ServerPlayerEntity> playerEntities = EntityArgument.getPlayers( context, "targets" );
-		ServerWorld world = ServerLifecycleHooks.getCurrentServer().func_71218_a(
+		ServerWorld world = ServerLifecycleHooks.getCurrentServer().getWorld(
 			DimensionArgument.getDimensionArgument( context, "dimension" ) );
 		Vec2f vecPos = Vec2Argument.getVec2f( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
@@ -63,9 +61,9 @@ public class GiveDCCommand {
 				if( entity != null ) {
 					entity.makeFakeItem();
 				}
-				player.world.playSound( null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP,
-					SoundCategory.PLAYERS, 0.2F, ( ( player.getRNG().nextFloat() - player.getRNG().nextFloat() )
-						* 0.7F + 1.0F ) * 2.0F );
+				player.world.playSound( null, player.getPosX(), player.getPosY(), player.getPosZ(),
+					SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ( ( player.getRNG().nextFloat() -
+						player.getRNG().nextFloat() ) * 0.7F + 1.0F ) * 2.0F );
 				player.container.detectAndSendChanges();
 			} else {
 				entity = player.dropItem( stack, false );
