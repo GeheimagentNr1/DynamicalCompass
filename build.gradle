@@ -43,7 +43,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                surpr_ice {
+                dynamical_compass {
                     source sourceSets.main
                 }
             }
@@ -59,7 +59,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                surpr_ice {
+                dynamical_compass {
                     source sourceSets.main
                 }
             }
@@ -74,10 +74,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'surpr_ice', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'dynamical_compass', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                surpr_ice {
+                dynamical_compass {
                     source sourceSets.main
                 }
             }
