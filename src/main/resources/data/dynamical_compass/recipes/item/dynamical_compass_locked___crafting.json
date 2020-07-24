@@ -1,8 +1,11 @@
 {
-	"type": "dynamical_compass:crafting_shapeless_nbt",
+	"type": "recipes_lib:crafting_shapeless_nbt",
 	"ingredients": [
 		{
-			"item": "dynamical_compass:dynamical_compass"
+			"type": "recipes_lib:nbt",
+			"item": "dynamical_compass:dynamical_compass",
+			"nbt": "{locked:true}",
+			"matchType": "CONTAINS_NONE"
 		},
 		{
 			"item": "minecraft:glass_pane"
