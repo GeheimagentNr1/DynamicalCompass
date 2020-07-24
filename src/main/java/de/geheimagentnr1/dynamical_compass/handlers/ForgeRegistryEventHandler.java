@@ -1,9 +1,9 @@
 package de.geheimagentnr1.dynamical_compass.handlers;
 
 import de.geheimagentnr1.dynamical_compass.elements.commands.GiveDCCommand;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
 
 @SuppressWarnings( "unused" )
@@ -12,8 +12,8 @@ public class ForgeRegistryEventHandler {
 	
 	
 	@SubscribeEvent
-	public static void handlerServerStartEvent( FMLServerStartingEvent event ) {
+	public static void handlerRegisterCommandsEvent( RegisterCommandsEvent event ) {
 		
-		GiveDCCommand.register( event.getCommandDispatcher() );
+		GiveDCCommand.register( event.getDispatcher() );
 	}
 }
