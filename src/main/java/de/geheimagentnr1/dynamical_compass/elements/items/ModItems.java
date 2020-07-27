@@ -16,7 +16,7 @@ public class ModItems {
 	// R - Rezept fertig
 	// T - Tags fertig
 	
-	public final static Item[] ITEMS = {
+	public static final Item[] ITEMS = {
 		//Dynamical Compass
 		new DynamicalCompass(),//FINRT
 	};
