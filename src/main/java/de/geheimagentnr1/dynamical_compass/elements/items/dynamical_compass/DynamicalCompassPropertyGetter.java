@@ -18,9 +18,8 @@ import java.security.SecureRandom;
 import java.util.Objects;
 
 
-//package-private
 @SuppressWarnings( "unused" )
-class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
+public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	
 	
 	@OnlyIn( Dist.CLIENT )
