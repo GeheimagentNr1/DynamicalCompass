@@ -39,18 +39,21 @@ public class DynamicalCompassItemStackHelper {
 		stack.getOrCreateTag().put( destinationName, compound );
 	}
 	
-	public static boolean isDimensionEqual( ItemStack stack, World world ) {
+	//package-private
+	static boolean isDimensionEqual( ItemStack stack, World world ) {
 		
 		return Objects.equals( world.func_234923_W_().func_240901_a_(), ResourceLocation.tryCreate(
 			stack.getOrCreateTag().getCompound( destinationName ).getString( dimensionName ) ) );
 	}
 	
-	public static BlockPos getDestinationPos( ItemStack stack ) {
+	//package-private
+	static BlockPos getDestinationPos( ItemStack stack ) {
 		
 		return NBTUtil.readBlockPos( stack.getOrCreateTag().getCompound( destinationName ).getCompound( posName ) );
 	}
 	
-	public static boolean isLocked( ItemStack stack ) {
+	//package-private
+	static boolean isLocked( ItemStack stack ) {
 		
 		return stack.getOrCreateTag().getBoolean( lockedName );
 	}
@@ -60,7 +63,8 @@ public class DynamicalCompassItemStackHelper {
 		stack.getOrCreateTag().putBoolean( lockedName, locked );
 	}
 	
-	public static void setRotationRotaAndLastUpdateTick( ItemStack stack, double rotation, double rota,
+	//package-private
+	static void setRotationRotaAndLastUpdateTick( ItemStack stack, double rotation, double rota,
 		long lastUpdateTick ) {
 		
 		CompoundNBT compound = new CompoundNBT();
@@ -70,17 +74,20 @@ public class DynamicalCompassItemStackHelper {
 		stack.getOrCreateTag().put( directionDataName, compound );
 	}
 	
-	public static double getRotation( ItemStack stack ) {
+	//package-private
+	static double getRotation( ItemStack stack ) {
 		
 		return stack.getOrCreateTag().getCompound( directionDataName ).getDouble( rotationName );
 	}
 	
-	public static double getRota( ItemStack stack ) {
+	//package-private
+	static double getRota( ItemStack stack ) {
 		
 		return stack.getOrCreateTag().getCompound( directionDataName ).getDouble( rotaName );
 	}
 	
-	public static long getLastUpdateTick( ItemStack stack ) {
+	//package-private
+	static long getLastUpdateTick( ItemStack stack ) {
 		
 		return stack.getOrCreateTag().getCompound( directionDataName ).getLong( lastUpdateTickName );
 	}
