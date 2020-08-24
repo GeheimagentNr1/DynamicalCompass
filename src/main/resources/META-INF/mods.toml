@@ -53,6 +53,6 @@ Mod that adds a compass that shows to a custom position
 [[dependencies.dynamical_compass]]
     modId="recipes_lib"
     mandatory=true
-    versionRange="[1.0.0,)"
+    versionRange="[1.1.0,)"
     ordering="NONE"
     side="BOTH"
