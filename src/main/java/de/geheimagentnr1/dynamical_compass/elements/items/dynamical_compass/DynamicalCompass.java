@@ -33,7 +33,7 @@ public class DynamicalCompass extends Item {
 		@Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn ) {
 		
 		tooltip.add( new StringTextComponent( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
-			.func_240699_a_( TextFormatting.GRAY ) );
+			.mergeStyle( TextFormatting.GRAY ) );
 	}
 	
 	@Nonnull

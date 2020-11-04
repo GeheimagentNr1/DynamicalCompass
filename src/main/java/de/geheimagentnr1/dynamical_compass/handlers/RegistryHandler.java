@@ -22,7 +22,7 @@ public class RegistryHandler {
 	@SubscribeEvent
 	public static void handleClientSetupEvent( FMLClientSetupEvent event ) {
 		
-		ItemModelsProperties.func_239418_a_( ModItems.DYNAMICAL_COMPASS, new ResourceLocation( "angle" ),
+		ItemModelsProperties.registerProperty( ModItems.DYNAMICAL_COMPASS, new ResourceLocation( "angle" ),
 			new DynamicalCompassPropertyGetter() );
 	}
 	
