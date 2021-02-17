@@ -29,11 +29,14 @@ public class DynamicalCompass extends Item {
 	}
 	
 	@Override
-	public void addInformation( @Nonnull ItemStack stack, @Nullable World worldIn,
-		@Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn ) {
+	public void addInformation(
+		@Nonnull ItemStack stack,
+		@Nullable World worldIn,
+		@Nonnull List<ITextComponent> tooltip,
+		@Nonnull ITooltipFlag flagIn ) {
 		
-		tooltip.add( new StringTextComponent( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
-			.func_240699_a_( TextFormatting.GRAY ) );
+		tooltip.add( new StringTextComponent(
+			"Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) ).func_240699_a_( TextFormatting.GRAY ) );
 	}
 	
 	@Nonnull
@@ -42,8 +45,11 @@ public class DynamicalCompass extends Item {
 		
 		PlayerEntity player = context.getPlayer();
 		if( player != null && player.isSneaking() && !DynamicalCompassItemStackHelper.isLocked( context.getItem() ) ) {
-			DynamicalCompassItemStackHelper.setDimensionAndPos( context.getItem(), context.getWorld(),
-				context.getPos() );
+			DynamicalCompassItemStackHelper.setDimensionAndPos(
+				context.getItem(),
+				context.getWorld(),
+				context.getPos()
+			);
 			return ActionResultType.SUCCESS;
 		}
 		return ActionResultType.PASS;

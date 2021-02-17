@@ -38,8 +38,9 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 			}
 			double angel;
 			if( DynamicalCompassItemStackHelper.isDimensionEqual( stack, world ) ) {
-				double rotation = isLivingEntityNotNull ? entity.rotationYaw : getFrameRotation(
-					(ItemFrameEntity)entity );
+				double rotation = isLivingEntityNotNull
+					? entity.rotationYaw
+					: getFrameRotation( (ItemFrameEntity)entity );
 				rotation = MathHelper.positiveModulo( rotation / 360.0D, 1.0D );
 				double d2 = getSpawnToAngle( stack, entity ) / ( (float)Math.PI * 2.0F );
 				angel = 0.5D - ( rotation - 0.25D - d2 );
@@ -65,8 +66,12 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 			rota += d0 * 0.1D;
 			rota *= 0.8D;
 			rotation = MathHelper.positiveModulo( rotation + rota, 1.0D );
-			DynamicalCompassItemStackHelper.setRotationRotaAndLastUpdateTick( stack, rotation, rota,
-				worldIn.getGameTime() );
+			DynamicalCompassItemStackHelper.setRotationRotaAndLastUpdateTick(
+				stack,
+				rotation,
+				rota,
+				worldIn.getGameTime()
+			);
 		}
 		return rotation;
 	}
