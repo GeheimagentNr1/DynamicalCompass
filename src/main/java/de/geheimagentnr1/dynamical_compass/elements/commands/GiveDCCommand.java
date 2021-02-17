@@ -31,8 +31,8 @@ public class GiveDCCommand {
 	
 	public static void register( CommandDispatcher<CommandSource> dispatcher ) {
 		
-		LiteralArgumentBuilder<CommandSource> giveDC = Commands.literal( "giveDC" ).requires(
-			commandSource -> commandSource.hasPermissionLevel( 2 ) );
+		LiteralArgumentBuilder<CommandSource> giveDC =
+			Commands.literal( "giveDC" ).requires( commandSource -> commandSource.hasPermissionLevel( 2 ) );
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.getDimension() )
@@ -45,8 +45,11 @@ public class GiveDCCommand {
 		
 		CommandSource source = context.getSource();
 		Collection<ServerPlayerEntity> playerEntities = EntityArgument.getPlayers( context, "targets" );
-		ServerWorld world = ServerLifecycleHooks.getCurrentServer().getWorld(
-			DimensionArgument.getDimensionArgument( context, "dimension" ) );
+		ServerWorld world =
+			ServerLifecycleHooks.getCurrentServer().getWorld( DimensionArgument.getDimensionArgument(
+				context,
+				"dimension"
+			) );
 		Vec2f vecPos = Vec2Argument.getVec2f( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
 		boolean locked = BoolArgumentType.getBool( context, "locked" );
@@ -61,7 +64,11 @@ public class GiveDCCommand {
 				if( entity != null ) {
 					entity.makeFakeItem();
 				}
-				player.world.playSound( null, player.getPosX(), player.getPosY(), player.getPosZ(),
+				player.world.playSound(
+					null,
+					player.getPosX(),
+					player.getPosY(),
+					player.getPosZ(),
 					SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ( ( player.getRNG().nextFloat() -
 						player.getRNG().nextFloat() ) * 0.7F + 1.0F ) * 2.0F );
 				player.container.detectAndSendChanges();
@@ -75,11 +82,19 @@ public class GiveDCCommand {
 		}
 		ItemStack stack = createItemstack( world, pos, locked );
 		if( playerEntities.size() == 1 ) {
-			source.sendFeedback( new TranslationTextComponent( "commands.give.success.single",
-				1, stack.getTextComponent(), playerEntities.iterator().next().getDisplayName() ), true );
+			source.sendFeedback( new TranslationTextComponent(
+				"commands.give.success.single",
+				1,
+				stack.getTextComponent(),
+				playerEntities.iterator().next().getDisplayName()
+			), true );
 		} else {
-			source.sendFeedback( new TranslationTextComponent( "commands.give.success.single",
-				1, stack.getTextComponent(), playerEntities.size() ), true );
+			source.sendFeedback( new TranslationTextComponent(
+				"commands.give.success.single",
+				1,
+				stack.getTextComponent(),
+				playerEntities.size()
+			), true );
 		}
 		return playerEntities.size();
 	}
