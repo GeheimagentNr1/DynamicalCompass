@@ -35,7 +35,7 @@ public class DynamicalCompassItemStackHelper {
 		CompoundNBT compound = new CompoundNBT();
 		compound.putString(
 			dimensionName,
-			Objects.requireNonNull( world.func_234923_W_().func_240901_a_() ).toString()
+			Objects.requireNonNull( world.getDimensionKey().getLocation() ).toString()
 		);
 		compound.put( posName, NBTUtil.writeBlockPos( pos ) );
 		stack.getOrCreateTag().put( destinationName, compound );
@@ -45,7 +45,7 @@ public class DynamicalCompassItemStackHelper {
 	static boolean isDimensionEqual( ItemStack stack, World world ) {
 		
 		return Objects.equals(
-			world.func_234923_W_().func_240901_a_(),
+			world.getDimensionKey().getLocation(),
 			ResourceLocation.tryCreate( stack.getOrCreateTag()
 				.getCompound( destinationName )
 				.getString( dimensionName ) )
