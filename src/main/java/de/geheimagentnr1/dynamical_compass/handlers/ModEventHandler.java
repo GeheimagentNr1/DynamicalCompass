@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @SuppressWarnings( "unused" )
 @Mod.EventBusSubscriber( bus = Mod.EventBusSubscriber.Bus.MOD )
-public class RegistryHandler {
+public class ModEventHandler {
 	
 	
 	@OnlyIn( Dist.CLIENT )
