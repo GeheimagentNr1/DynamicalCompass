@@ -1,6 +1,6 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
-import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
+import de.geheimagentnr1.dynamical_compass.elements.item_groups.ModItemGroups;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -25,7 +25,7 @@ public class DynamicalCompass extends Item {
 	
 	public DynamicalCompass() {
 		
-		super( new Item.Properties().group( DynamicalCompassMod.setup.dynamicalCompassItemGroup ) );
+		super( new Item.Properties().group( ModItemGroups.DYNAMICAL_COMPASS ) );
 		setRegistryName( registry_name );
 		addPropertyOverride( new ResourceLocation( "angle" ), new DynamicalCompassPropertyGetter() );
 	}

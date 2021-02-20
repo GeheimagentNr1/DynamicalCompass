@@ -18,7 +18,6 @@ import java.util.Objects;
 
 
 //package-private
-@SuppressWarnings( "unused" )
 class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	
 	
