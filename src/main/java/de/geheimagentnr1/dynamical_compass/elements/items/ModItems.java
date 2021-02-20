@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
 
-@SuppressWarnings( { "StaticNonFinalField", "unused", "PublicField", "PublicStaticArrayField" } )
+@SuppressWarnings( { "PublicStaticArrayField", "StaticNonFinalField" } )
 public class ModItems {
 	
 	//TODO:
