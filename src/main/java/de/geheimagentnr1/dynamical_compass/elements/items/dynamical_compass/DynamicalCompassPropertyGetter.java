@@ -18,7 +18,6 @@ import java.security.SecureRandom;
 import java.util.Objects;
 
 
-@SuppressWarnings( "unused" )
 public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	
 	

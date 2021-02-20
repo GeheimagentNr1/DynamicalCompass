@@ -11,7 +11,8 @@ import javax.annotation.Nonnull;
 public class DynamicalCompassItemGroup extends ItemGroup {
 	
 	
-	public DynamicalCompassItemGroup() {
+	//package-private
+	DynamicalCompassItemGroup() {
 		
 		super( DynamicalCompassMod.MODID );
 	}
