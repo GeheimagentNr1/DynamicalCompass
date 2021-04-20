@@ -12,7 +12,7 @@ public class ModEventHandler {
 	
 	
 	@SubscribeEvent
-	public static void onItemsRegistry( RegistryEvent.Register<Item> itemRegistryEvent ) {
+	public static void hangleRegisterItemEvent( RegistryEvent.Register<Item> itemRegistryEvent ) {
 		
 		itemRegistryEvent.getRegistry().registerAll( ModItems.ITEMS );
 	}

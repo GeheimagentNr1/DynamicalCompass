@@ -11,7 +11,7 @@ public class ForgeEventHandler {
 	
 	
 	@SubscribeEvent
-	public static void handlerServerStartEvent( FMLServerStartingEvent event ) {
+	public static void handlerServerStartingEvent( FMLServerStartingEvent event ) {
 		
 		GiveDCCommand.register( event.getCommandDispatcher() );
 	}
