@@ -31,8 +31,8 @@ public class GiveDCCommand {
 	
 	public static void register( CommandDispatcher<CommandSource> dispatcher ) {
 		
-		LiteralArgumentBuilder<CommandSource> giveDC =
-			Commands.literal( "giveDC" ).requires( commandSource -> commandSource.hasPermissionLevel( 2 ) );
+		LiteralArgumentBuilder<CommandSource> giveDC = Commands.literal( "giveDC" )
+				.requires( commandSource -> commandSource.hasPermissionLevel( 2 ) );
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.getDimension() )
@@ -45,10 +45,8 @@ public class GiveDCCommand {
 		
 		CommandSource source = context.getSource();
 		Collection<ServerPlayerEntity> playerEntities = EntityArgument.getPlayers( context, "targets" );
-		ServerWorld world = ServerLifecycleHooks.getCurrentServer().getWorld( DimensionArgument.getDimensionArgument(
-			context,
-			"dimension"
-		) );
+		ServerWorld world = ServerLifecycleHooks.getCurrentServer()
+			.getWorld( DimensionArgument.getDimensionArgument( context, "dimension" ) );
 		Vec2f vecPos = Vec2Argument.getVec2f( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
 		boolean locked = BoolArgumentType.getBool( context, "locked" );
