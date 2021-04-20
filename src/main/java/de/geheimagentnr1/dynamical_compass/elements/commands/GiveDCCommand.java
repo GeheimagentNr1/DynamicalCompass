@@ -45,11 +45,10 @@ public class GiveDCCommand {
 		
 		CommandSource source = context.getSource();
 		Collection<ServerPlayerEntity> playerEntities = EntityArgument.getPlayers( context, "targets" );
-		ServerWorld world =
-			ServerLifecycleHooks.getCurrentServer().getWorld( DimensionArgument.getDimensionArgument(
-				context,
-				"dimension"
-			) );
+		ServerWorld world = ServerLifecycleHooks.getCurrentServer().getWorld( DimensionArgument.getDimensionArgument(
+			context,
+			"dimension"
+		) );
 		Vec2f vecPos = Vec2Argument.getVec2f( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
 		boolean locked = BoolArgumentType.getBool( context, "locked" );
@@ -69,8 +68,11 @@ public class GiveDCCommand {
 					player.getPosX(),
 					player.getPosY(),
 					player.getPosZ(),
-					SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ( ( player.getRNG().nextFloat() -
-						player.getRNG().nextFloat() ) * 0.7F + 1.0F ) * 2.0F );
+					SoundEvents.ENTITY_ITEM_PICKUP,
+					SoundCategory.PLAYERS,
+					0.2F,
+					( ( player.getRNG().nextFloat() - player.getRNG().nextFloat() ) * 0.7F + 1.0F ) * 2.0F
+				);
 				player.container.detectAndSendChanges();
 			} else {
 				entity = player.dropItem( stack, false );
