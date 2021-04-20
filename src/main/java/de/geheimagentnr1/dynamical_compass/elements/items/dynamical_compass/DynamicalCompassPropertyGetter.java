@@ -28,20 +28,18 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 		@Nullable ClientWorld clientWorld,
 		@Nullable LivingEntity livingEntity ) {
 		
-		if( livingEntity == null && !stack.isOnItemFrame() ) {
+		if( livingEntity == null && !stack.isFramed() ) {
 			return 0.0F;
 		} else {
 			boolean isLivingEntityNotNull = livingEntity != null;
-			Entity entity = Objects.requireNonNull( isLivingEntityNotNull ? livingEntity : stack.getItemFrame() );
+			Entity entity = Objects.requireNonNull( isLivingEntityNotNull ? livingEntity : stack.getFrame() );
 			World world = clientWorld;
 			if( world == null ) {
-				world = entity.world;
+				world = entity.level;
 			}
 			double angel;
 			if( DynamicalCompassItemStackHelper.isDimensionEqual( stack, world ) ) {
-				double rotation = isLivingEntityNotNull
-					? entity.rotationYaw
-					: getFrameRotation( (ItemFrameEntity)entity );
+				double rotation = isLivingEntityNotNull ? entity.yRot : getFrameRotation( (ItemFrameEntity)entity );
 				rotation = MathHelper.positiveModulo( rotation / 360.0D, 1.0D );
 				double d2 = getSpawnToAngle( stack, entity ) / ( (float)Math.PI * 2.0F );
 				angel = 0.5D - ( rotation - 0.25D - d2 );
@@ -80,13 +78,13 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	@OnlyIn( Dist.CLIENT )
 	private double getFrameRotation( ItemFrameEntity itemFrameEntity ) {
 		
-		return MathHelper.wrapDegrees( 180 + itemFrameEntity.getHorizontalFacing().getHorizontalIndex() * 90 );
+		return MathHelper.wrapDegrees( 180 + itemFrameEntity.getDirection().get2DDataValue() * 90 );
 	}
 	
 	@OnlyIn( Dist.CLIENT )
 	private double getSpawnToAngle( ItemStack stack, Entity entity ) {
 		
 		BlockPos blockpos = DynamicalCompassItemStackHelper.getDestinationPos( stack );
-		return StrictMath.atan2( blockpos.getZ() - entity.getPosZ(), blockpos.getX() - entity.getPosX() );
+		return StrictMath.atan2( blockpos.getZ() - entity.getZ(), blockpos.getX() - entity.getX() );
 	}
 }

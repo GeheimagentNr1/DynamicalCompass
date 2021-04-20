@@ -30,11 +30,11 @@ public class GiveDCCommand {
 	
 	public static void register( CommandDispatcher<CommandSource> dispatcher ) {
 		
-		LiteralArgumentBuilder<CommandSource> giveDC =
-			Commands.literal( "giveDC" ).requires( commandSource -> commandSource.hasPermissionLevel( 2 ) );
+		LiteralArgumentBuilder<CommandSource> giveDC = Commands.literal( "giveDC" )
+			.requires( commandSource -> commandSource.hasPermission( 2 ) );
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
-				.then( Commands.argument( "dimension", DimensionArgument.getDimension() )
+				.then( Commands.argument( "dimension", DimensionArgument.dimension() )
 					.then( Commands.argument( "locked", BoolArgumentType.bool() )
 						.executes( GiveDCCommand::giveDC ) ) ) ) );
 		dispatcher.register( giveDC );
@@ -44,53 +44,53 @@ public class GiveDCCommand {
 		
 		CommandSource source = context.getSource();
 		Collection<ServerPlayerEntity> playerEntities = EntityArgument.getPlayers( context, "targets" );
-		ServerWorld world = DimensionArgument.getDimensionArgument( context, "dimension" );
-		Vector2f vecPos = Vec2Argument.getVec2f( context, "destination" );
+		ServerWorld world = DimensionArgument.getDimension( context, "dimension" );
+		Vector2f vecPos = Vec2Argument.getVec2( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
 		boolean locked = BoolArgumentType.getBool( context, "locked" );
 		
 		for( ServerPlayerEntity player : playerEntities ) {
 			ItemStack stack = createItemstack( world, pos, locked );
-			boolean couldAdd = player.inventory.addItemStackToInventory( stack );
+			boolean couldAdd = player.inventory.add( stack );
 			ItemEntity entity;
 			if( couldAdd && stack.isEmpty() ) {
 				stack.setCount( 1 );
-				entity = player.dropItem( stack, false );
+				entity = player.drop( stack, false );
 				if( entity != null ) {
 					entity.makeFakeItem();
 				}
-				player.world.playSound(
+				player.level.playSound(
 					null,
-					player.getPosX(),
-					player.getPosY(),
-					player.getPosZ(),
-					SoundEvents.ENTITY_ITEM_PICKUP,
+					player.getX(),
+					player.getY(),
+					player.getZ(),
+					SoundEvents.ITEM_PICKUP,
 					SoundCategory.PLAYERS,
 					0.2F,
-					( ( player.getRNG().nextFloat() - player.getRNG().nextFloat() ) * 0.7F + 1.0F ) * 2.0F
+					( ( player.getRandom().nextFloat() - player.getRandom().nextFloat() ) * 0.7F + 1.0F ) * 2.0F
 				);
-				player.container.detectAndSendChanges();
+				player.inventoryMenu.broadcastChanges();
 			} else {
-				entity = player.dropItem( stack, false );
+				entity = player.drop( stack, false );
 				if( entity != null ) {
-					entity.setNoPickupDelay();
-					entity.setOwnerId( player.getUniqueID() );
+					entity.setNoPickUpDelay();
+					entity.setOwner( player.getUUID() );
 				}
 			}
 		}
 		ItemStack stack = createItemstack( world, pos, locked );
 		if( playerEntities.size() == 1 ) {
-			source.sendFeedback( new TranslationTextComponent(
+			source.sendSuccess( new TranslationTextComponent(
 				"commands.give.success.single",
 				1,
-				stack.getTextComponent(),
+				stack.getDisplayName(),
 				playerEntities.iterator().next().getDisplayName()
 			), true );
 		} else {
-			source.sendFeedback( new TranslationTextComponent(
+			source.sendSuccess( new TranslationTextComponent(
 				"commands.give.success.single",
 				1,
-				stack.getTextComponent(),
+				stack.getDisplayName(),
 				playerEntities.size()
 			), true );
 		}

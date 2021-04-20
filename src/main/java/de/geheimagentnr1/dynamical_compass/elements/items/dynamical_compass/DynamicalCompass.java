@@ -24,31 +24,32 @@ public class DynamicalCompass extends Item {
 	
 	public DynamicalCompass() {
 		
-		super( new Item.Properties().group( ModItemGroups.DYNAMICAL_COMPASS ) );
+		super( new Item.Properties().tab( ModItemGroups.DYNAMICAL_COMPASS ) );
 		setRegistryName( registry_name );
 	}
 	
 	@Override
-	public void addInformation(
+	public void appendHoverText(
 		@Nonnull ItemStack stack,
 		@Nullable World worldIn,
 		@Nonnull List<ITextComponent> tooltip,
 		@Nonnull ITooltipFlag flagIn ) {
 		
 		tooltip.add( new StringTextComponent(
-			"Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) ).mergeStyle( TextFormatting.GRAY ) );
+			"Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) ).withStyle( TextFormatting.GRAY ) );
 	}
 	
 	@Nonnull
 	@Override
-	public ActionResultType onItemUse( ItemUseContext context ) {
+	public ActionResultType useOn( ItemUseContext context ) {
 		
 		PlayerEntity player = context.getPlayer();
-		if( player != null && player.isSneaking() && !DynamicalCompassItemStackHelper.isLocked( context.getItem() ) ) {
+		if( player != null && player.isShiftKeyDown() &&
+			!DynamicalCompassItemStackHelper.isLocked( context.getItemInHand() ) ) {
 			DynamicalCompassItemStackHelper.setDimensionAndPos(
-				context.getItem(),
-				context.getWorld(),
-				context.getPos()
+				context.getItemInHand(),
+				context.getLevel(),
+				context.getClickedPos()
 			);
 			return ActionResultType.SUCCESS;
 		}
