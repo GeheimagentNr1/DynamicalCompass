@@ -64,8 +64,11 @@ public class GiveDCCommand {
 					player.getPosX(),
 					player.getPosY(),
 					player.getPosZ(),
-					SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ( ( player.getRNG().nextFloat() -
-						player.getRNG().nextFloat() ) * 0.7F + 1.0F ) * 2.0F );
+					SoundEvents.ENTITY_ITEM_PICKUP,
+					SoundCategory.PLAYERS,
+					0.2F,
+					( ( player.getRNG().nextFloat() - player.getRNG().nextFloat() ) * 0.7F + 1.0F ) * 2.0F
+				);
 				player.container.detectAndSendChanges();
 			} else {
 				entity = player.dropItem( stack, false );

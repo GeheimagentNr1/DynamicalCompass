@@ -23,7 +23,9 @@ public class DynamicalCompassPropertyGetter implements IItemPropertyGetter {
 	
 	@OnlyIn( Dist.CLIENT )
 	@Override
-	public float call( @Nonnull ItemStack stack, @Nullable ClientWorld clientWorld,
+	public float call(
+		@Nonnull ItemStack stack,
+		@Nullable ClientWorld clientWorld,
 		@Nullable LivingEntity livingEntity ) {
 		
 		if( livingEntity == null && !stack.isOnItemFrame() ) {
