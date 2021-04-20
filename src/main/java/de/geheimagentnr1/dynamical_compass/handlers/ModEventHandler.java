@@ -22,8 +22,11 @@ public class ModEventHandler {
 	@SubscribeEvent
 	public static void handleClientSetupEvent( FMLClientSetupEvent event ) {
 		
-		ItemModelsProperties.func_239418_a_( ModItems.DYNAMICAL_COMPASS, new ResourceLocation( "angle" ),
-			new DynamicalCompassPropertyGetter() );
+		ItemModelsProperties.func_239418_a_(
+			ModItems.DYNAMICAL_COMPASS,
+			new ResourceLocation( "angle" ),
+			new DynamicalCompassPropertyGetter()
+		);
 	}
 	
 	@SubscribeEvent
