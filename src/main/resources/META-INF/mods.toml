@@ -32,7 +32,7 @@ credits="Thanks for the logo and the textures goes to Muse31" #optional
 authors="GeheimagentNr1, Muse31" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Mod that adds a compass that shows to a custom position
+Adds a compass, pointing to a custom position.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.dynamical_compass]] #optional
@@ -56,6 +56,6 @@ Mod that adds a compass that shows to a custom position
 [[dependencies.dynamical_compass]]
     modId="recipes_lib"
     mandatory=true
-    versionRange="[1.0.0,)"
+    versionRange="[2.0.0,)"
     ordering="NONE"
     side="BOTH"
