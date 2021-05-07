@@ -30,8 +30,8 @@ public class GiveDCCommand {
 	
 	public static void register( CommandDispatcher<CommandSource> dispatcher ) {
 		
-		LiteralArgumentBuilder<CommandSource> giveDC =
-			Commands.literal( "giveDC" ).requires( commandSource -> commandSource.hasPermissionLevel( 2 ) );
+		LiteralArgumentBuilder<CommandSource> giveDC = Commands.literal( "giveDC" )
+				.requires( commandSource -> commandSource.hasPermissionLevel( 2 ) );
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.getDimension() )
