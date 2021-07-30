@@ -2,7 +2,7 @@ package de.geheimagentnr1.dynamical_compass.elements.items;
 
 import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompass;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
 

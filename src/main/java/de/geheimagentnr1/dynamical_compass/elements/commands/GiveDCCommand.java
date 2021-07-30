@@ -7,20 +7,20 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassItemStackHelper;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.arguments.DimensionArgument;
-import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.command.arguments.Vec2Argument;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.DimensionArgument;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.coordinates.Vec2Argument;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec2;
 
 import java.util.Collection;
 
@@ -28,10 +28,10 @@ import java.util.Collection;
 public class GiveDCCommand {
 	
 	
-	public static void register( CommandDispatcher<CommandSource> dispatcher ) {
+	public static void register( CommandDispatcher<CommandSourceStack> dispatcher ) {
 		
-		LiteralArgumentBuilder<CommandSource> giveDC = Commands.literal( "giveDC" )
-			.requires( commandSource -> commandSource.hasPermission( 2 ) );
+		LiteralArgumentBuilder<CommandSourceStack> giveDC = Commands.literal( "giveDC" )
+			.requires( source -> source.hasPermission( 2 ) );
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.dimension() )
@@ -40,18 +40,18 @@ public class GiveDCCommand {
 		dispatcher.register( giveDC );
 	}
 	
-	private static int giveDC( CommandContext<CommandSource> context ) throws CommandSyntaxException {
+	private static int giveDC( CommandContext<CommandSourceStack> context ) throws CommandSyntaxException {
 		
-		CommandSource source = context.getSource();
-		Collection<ServerPlayerEntity> playerEntities = EntityArgument.getPlayers( context, "targets" );
-		ServerWorld world = DimensionArgument.getDimension( context, "dimension" );
-		Vector2f vecPos = Vec2Argument.getVec2( context, "destination" );
+		CommandSourceStack source = context.getSource();
+		Collection<ServerPlayer> playerEntities = EntityArgument.getPlayers( context, "targets" );
+		ServerLevel level = DimensionArgument.getDimension( context, "dimension" );
+		Vec2 vecPos = Vec2Argument.getVec2( context, "destination" );
 		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
 		boolean locked = BoolArgumentType.getBool( context, "locked" );
 		
-		for( ServerPlayerEntity player : playerEntities ) {
-			ItemStack stack = createItemstack( world, pos, locked );
-			boolean couldAdd = player.inventory.add( stack );
+		for( ServerPlayer player : playerEntities ) {
+			ItemStack stack = createItemstack( level, pos, locked );
+			boolean couldAdd = player.getInventory().add( stack );
 			ItemEntity entity;
 			if( couldAdd && stack.isEmpty() ) {
 				stack.setCount( 1 );
@@ -65,7 +65,7 @@ public class GiveDCCommand {
 					player.getY(),
 					player.getZ(),
 					SoundEvents.ITEM_PICKUP,
-					SoundCategory.PLAYERS,
+					SoundSource.PLAYERS,
 					0.2F,
 					( ( player.getRandom().nextFloat() - player.getRandom().nextFloat() ) * 0.7F + 1.0F ) * 2.0F
 				);
@@ -78,16 +78,16 @@ public class GiveDCCommand {
 				}
 			}
 		}
-		ItemStack stack = createItemstack( world, pos, locked );
+		ItemStack stack = createItemstack( level, pos, locked );
 		if( playerEntities.size() == 1 ) {
-			source.sendSuccess( new TranslationTextComponent(
+			source.sendSuccess( new TranslatableComponent(
 				"commands.give.success.single",
 				1,
 				stack.getDisplayName(),
 				playerEntities.iterator().next().getDisplayName()
 			), true );
 		} else {
-			source.sendSuccess( new TranslationTextComponent(
+			source.sendSuccess( new TranslatableComponent(
 				"commands.give.success.single",
 				1,
 				stack.getDisplayName(),
@@ -97,10 +97,10 @@ public class GiveDCCommand {
 		return playerEntities.size();
 	}
 	
-	private static ItemStack createItemstack( ServerWorld world, BlockPos pos, boolean locked ) {
+	private static ItemStack createItemstack( ServerLevel level, BlockPos pos, boolean locked ) {
 		
 		ItemStack stack = new ItemStack( ModItems.DYNAMICAL_COMPASS );
-		DynamicalCompassItemStackHelper.setDimensionAndPos( stack, world, pos );
+		DynamicalCompassItemStackHelper.setDimensionAndPos( stack, level, pos );
 		DynamicalCompassItemStackHelper.setLocked( stack, locked );
 		return stack;
 	}

@@ -1,16 +1,16 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
 import de.geheimagentnr1.dynamical_compass.elements.item_groups.ModItemGroups;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,19 +31,19 @@ public class DynamicalCompass extends Item {
 	@Override
 	public void appendHoverText(
 		@Nonnull ItemStack stack,
-		@Nullable World worldIn,
-		@Nonnull List<ITextComponent> tooltip,
-		@Nonnull ITooltipFlag flagIn ) {
+		@Nullable Level level,
+		@Nonnull List<Component> tooltip,
+		@Nonnull TooltipFlag flag ) {
 		
-		tooltip.add( new StringTextComponent(
-			"Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) ).withStyle( TextFormatting.GRAY ) );
+		tooltip.add( new TextComponent( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
+			.withStyle( ChatFormatting.GRAY ) );
 	}
 	
 	@Nonnull
 	@Override
-	public ActionResultType useOn( ItemUseContext context ) {
+	public InteractionResult useOn( @Nonnull UseOnContext context ) {
 		
-		PlayerEntity player = context.getPlayer();
+		Player player = context.getPlayer();
 		if( player != null && player.isShiftKeyDown() &&
 			!DynamicalCompassItemStackHelper.isLocked( context.getItemInHand() ) ) {
 			DynamicalCompassItemStackHelper.setDimensionAndPos(
@@ -51,8 +51,8 @@ public class DynamicalCompass extends Item {
 				context.getLevel(),
 				context.getClickedPos()
 			);
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 }
