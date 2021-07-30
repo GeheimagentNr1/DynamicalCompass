@@ -20,14 +20,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 
-public class DynamicalCompassPropertyGetter implements ClampedItemPropertyFunction {
+public class DynamicalCompassPropertyFunction implements ClampedItemPropertyFunction {
 	
 	
-	private final DynamicalCompassPropertyGetter.CompassWobble wobble =
-		new DynamicalCompassPropertyGetter.CompassWobble();
+	private final DynamicalCompassWobble wobble = new DynamicalCompassWobble();
 	
-	private final DynamicalCompassPropertyGetter.CompassWobble wobbleRandom =
-		new DynamicalCompassPropertyGetter.CompassWobble();
+	private final DynamicalCompassWobble wobbleRandom = new DynamicalCompassWobble();
 	
 	@Override
 	public float unclampedCall(
@@ -80,7 +78,7 @@ public class DynamicalCompassPropertyGetter implements ClampedItemPropertyFuncti
 						wobble.update( gameTime, 0.5D - ( rota - 0.25D ) );
 					}
 					
-					rotation = angleTo + wobble.rotation;
+					rotation = angleTo + wobble.getRotation();
 				} else {
 					rotation = 0.5D - ( rota - 0.25D - angleTo );
 				}
@@ -90,7 +88,10 @@ public class DynamicalCompassPropertyGetter implements ClampedItemPropertyFuncti
 				if( wobbleRandom.shouldUpdate( gameTime ) ) {
 					wobbleRandom.update( gameTime, StrictMath.random() );
 				}
-				return Mth.positiveModulo( (float)( wobbleRandom.rotation + ( hash( seed ) / 2.14748365E9F ) ), 1.0F );
+				return Mth.positiveModulo(
+					(float)( wobbleRandom.getRotation() + ( hash( seed ) / 2.14748365E9F ) ),
+					1.0F
+				);
 			}
 		}
 	}
@@ -112,32 +113,5 @@ public class DynamicalCompassPropertyGetter implements ClampedItemPropertyFuncti
 	private double getAngleTo( Vec3 vec3, Entity entity ) {
 		
 		return StrictMath.atan2( vec3.z() - entity.getZ(), vec3.x() - entity.getX() );
-	}
-	
-	
-	@OnlyIn( Dist.CLIENT )
-	private static class CompassWobble {
-		
-		
-		double rotation;
-		
-		private double deltaRotation;
-		
-		private long lastUpdateTick;
-		
-		boolean shouldUpdate( long gameTime ) {
-			
-			return lastUpdateTick != gameTime;
-		}
-		
-		void update( long gameTime, double oldRotation ) {
-			
-			lastUpdateTick = gameTime;
-			double rotationDelta = oldRotation - rotation;
-			rotationDelta = Mth.positiveModulo( rotationDelta + 0.5D, 1.0D ) - 0.5D;
-			deltaRotation += rotationDelta * 0.1D;
-			deltaRotation *= 0.8D;
-			rotation = Mth.positiveModulo( rotation + deltaRotation, 1.0D );
-		}
 	}
 }
