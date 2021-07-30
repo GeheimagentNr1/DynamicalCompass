@@ -48,52 +48,49 @@ public class DynamicalCompassPropertyGetter implements ClampedItemPropertyFuncti
 			BlockPos blockpos = DynamicalCompassItemStackHelper.isDimensionEqual( stack, level )
 				? DynamicalCompassItemStackHelper.getDestinationPos( stack )
 				: null;
-			long i = level.getGameTime();
-			if( blockpos != null && !( entity.position().distanceToSqr(
-				blockpos.getX() + 0.5D,
-				entity.position().y(),
-				blockpos.getZ() + 0.5D
-			) < 1.0E-5F ) ) {
+			long gameTime = level.getGameTime();
+			if( blockpos != null &&
+				!( entity.position()
+					.distanceToSqr( blockpos.getX() + 0.5D, entity.position().y(), blockpos.getZ() + 0.5D )
+					< 1.0E-5F ) ) {
 				boolean flag = livingEntity instanceof Player && ( (Player)livingEntity ).isLocalPlayer();
-				double d1 = 0.0D;
+				double rota = 0.0D;
 				if( flag ) {
-					d1 = livingEntity.getYRot();
+					rota = livingEntity.getYRot();
 				} else {
 					if( entity instanceof ItemFrame ) {
-						d1 = getFrameRotation( (ItemFrame)entity );
+						rota = getFrameRotation( (ItemFrame)entity );
 					} else {
 						if( entity instanceof ItemEntity ) {
-							d1 = 180.0F -
+							rota = 180.0F -
 								( (ItemEntity)entity ).getSpin( 0.5F ) / ( (float)Math.PI * 2.0F ) * 360.0F;
 						} else {
 							if( livingEntity != null ) {
-								d1 = livingEntity.yBodyRot;
+								rota = livingEntity.yBodyRot;
 							}
 						}
 					}
 				}
 				
-				d1 = Mth.positiveModulo( d1 / 360.0D, 1.0D );
-				double d2 = getAngleTo( Vec3.atCenterOf( blockpos ), entity ) / ( (float)Math.PI * 2.0F );
-				double d3;
+				rota = Mth.positiveModulo( rota / 360.0D, 1.0D );
+				double angleTo = getAngleTo( Vec3.atCenterOf( blockpos ), entity ) / ( (float)Math.PI * 2.0F );
+				double rotation;
 				if( flag ) {
-					if( wobble.shouldUpdate( i ) ) {
-						wobble.update( i, 0.5D - ( d1 - 0.25D ) );
+					if( wobble.shouldUpdate( gameTime ) ) {
+						wobble.update( gameTime, 0.5D - ( rota - 0.25D ) );
 					}
 					
-					d3 = d2 + wobble.rotation;
+					rotation = angleTo + wobble.rotation;
 				} else {
-					d3 = 0.5D - ( d1 - 0.25D - d2 );
+					rotation = 0.5D - ( rota - 0.25D - angleTo );
 				}
 				
-				return Mth.positiveModulo( (float)d3, 1.0F );
+				return Mth.positiveModulo( (float)rotation, 1.0F );
 			} else {
-				if( wobbleRandom.shouldUpdate( i ) ) {
-					wobbleRandom.update( i, StrictMath.random() );
+				if( wobbleRandom.shouldUpdate( gameTime ) ) {
+					wobbleRandom.update( gameTime, StrictMath.random() );
 				}
-				
-				double d0 = wobbleRandom.rotation + ( hash( seed ) / 2.14748365E9F );
-				return Mth.positiveModulo( (float)d0, 1.0F );
+				return Mth.positiveModulo( (float)( wobbleRandom.rotation + ( hash( seed ) / 2.14748365E9F ) ), 1.0F );
 			}
 		}
 	}
@@ -107,8 +104,8 @@ public class DynamicalCompassPropertyGetter implements ClampedItemPropertyFuncti
 	private double getFrameRotation( ItemFrame itemFrame ) {
 		
 		Direction direction = itemFrame.getDirection();
-		int i = direction.getAxis().isVertical() ? 90 * direction.getAxisDirection().getStep() : 0;
-		return Mth.wrapDegrees( 180 + direction.get2DDataValue() * 90 + itemFrame.getRotation() * 45 + i );
+		int rota = direction.getAxis().isVertical() ? 90 * direction.getAxisDirection().getStep() : 0;
+		return Mth.wrapDegrees( 180 + direction.get2DDataValue() * 90 + itemFrame.getRotation() * 45 + rota );
 	}
 	
 	@OnlyIn( Dist.CLIENT )
@@ -133,12 +130,12 @@ public class DynamicalCompassPropertyGetter implements ClampedItemPropertyFuncti
 			return lastUpdateTick != gameTime;
 		}
 		
-		void update( long gameTime, double p_117937_ ) {
+		void update( long gameTime, double oldRotation ) {
 			
 			lastUpdateTick = gameTime;
-			double d0 = p_117937_ - rotation;
-			d0 = Mth.positiveModulo( d0 + 0.5D, 1.0D ) - 0.5D;
-			deltaRotation += d0 * 0.1D;
+			double rotationDelta = oldRotation - rotation;
+			rotationDelta = Mth.positiveModulo( rotationDelta + 0.5D, 1.0D ) - 0.5D;
+			deltaRotation += rotationDelta * 0.1D;
 			deltaRotation *= 0.8D;
 			rotation = Mth.positiveModulo( rotation + deltaRotation, 1.0D );
 		}

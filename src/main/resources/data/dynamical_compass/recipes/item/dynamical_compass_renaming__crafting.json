@@ -1,5 +1,5 @@
 {
-	"type": "recipes_lib:renaming",
+	"type":       "recipes_lib:renaming",
 	"ingredient": {
 		"item": "dynamical_compass:dynamical_compass"
 	}

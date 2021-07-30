@@ -1,11 +1,11 @@
 {
-	"type": "minecraft:crafting_shaped",
+	"type":    "minecraft:crafting_shaped",
 	"pattern": [
 		" G ",
 		"GLG",
 		" G "
 	],
-	"key": {
+	"key":     {
 		"G": {
 			"item": "minecraft:gold_ingot"
 		},
@@ -13,7 +13,7 @@
 			"item": "minecraft:lapis_lazuli"
 		}
 	},
-	"result": {
+	"result":  {
 		"item": "dynamical_compass:dynamical_compass"
 	}
 }
