@@ -2,7 +2,7 @@ package de.geheimagentnr1.dynamical_compass.handlers;
 
 import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
-import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassPropertyGetter;
+import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -25,7 +25,7 @@ public class ModEventHandler {
 		ItemProperties.register(
 			ModItems.DYNAMICAL_COMPASS,
 			new ResourceLocation( "angle" ),
-			new DynamicalCompassPropertyGetter()
+			new DynamicalCompassPropertyFunction()
 		);
 	}
 	
