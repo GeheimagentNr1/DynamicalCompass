@@ -5,13 +5,13 @@ import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 
 @Mod.EventBusSubscriber( modid = DynamicalCompassMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD )
@@ -30,8 +30,16 @@ public class ModEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void hangleRegisterItemEvent( RegistryEvent.Register<Item> itemRegistryEvent ) {
+	public static void hangleRegisterItemEvent( RegisterEvent event ) {
 		
-		itemRegistryEvent.getRegistry().registerAll( ModItems.ITEMS );
+		if( event.getRegistryKey().equals( ForgeRegistries.Keys.ITEMS ) ) {
+			event.register(
+				ForgeRegistries.Keys.ITEMS,
+				registerHelper -> ModItems.ITEMS.forEach( registryEntry -> registerHelper.register(
+					registryEntry.getRegistryName(),
+					registryEntry.getValue()
+				) )
+			);
+		}
 	}
 }

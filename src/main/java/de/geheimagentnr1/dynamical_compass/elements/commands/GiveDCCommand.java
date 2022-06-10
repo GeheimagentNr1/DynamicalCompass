@@ -13,7 +13,7 @@ import net.minecraft.commands.arguments.DimensionArgument;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.coordinates.Vec2Argument;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -80,14 +80,14 @@ public class GiveDCCommand {
 		}
 		ItemStack stack = createItemstack( level, pos, locked );
 		if( playerEntities.size() == 1 ) {
-			source.sendSuccess( new TranslatableComponent(
+			source.sendSuccess( Component.translatable(
 				"commands.give.success.single",
 				1,
 				stack.getDisplayName(),
 				playerEntities.iterator().next().getDisplayName()
 			), true );
 		} else {
-			source.sendSuccess( new TranslatableComponent(
+			source.sendSuccess( Component.translatable(
 				"commands.give.success.single",
 				1,
 				stack.getDisplayName(),

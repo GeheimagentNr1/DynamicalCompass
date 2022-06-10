@@ -3,7 +3,6 @@ package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 import de.geheimagentnr1.dynamical_compass.elements.item_groups.ModItemGroups;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -25,7 +24,6 @@ public class DynamicalCompass extends Item {
 	public DynamicalCompass() {
 		
 		super( new Item.Properties().tab( ModItemGroups.DYNAMICAL_COMPASS ) );
-		setRegistryName( registry_name );
 	}
 	
 	@Override
@@ -35,7 +33,7 @@ public class DynamicalCompass extends Item {
 		@Nonnull List<Component> tooltip,
 		@Nonnull TooltipFlag flag ) {
 		
-		tooltip.add( new TextComponent( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
+		tooltip.add( Component.literal( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
 			.withStyle( ChatFormatting.GRAY ) );
 	}
 	

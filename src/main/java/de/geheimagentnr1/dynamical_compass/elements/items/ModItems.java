@@ -1,12 +1,16 @@
 package de.geheimagentnr1.dynamical_compass.elements.items;
 
 import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
+import de.geheimagentnr1.dynamical_compass.elements.RegistryEntry;
+import de.geheimagentnr1.dynamical_compass.elements.RegistryKeys;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompass;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
+import java.util.List;
 
-@SuppressWarnings( { "PublicStaticArrayField", "StaticNonFinalField" } )
+
+@SuppressWarnings( "StaticNonFinalField" )
 public class ModItems {
 	
 	//TODO:
@@ -16,13 +20,13 @@ public class ModItems {
 	// R - Rezept fertig
 	// T - Tags fertig
 	
-	public static final Item[] ITEMS = {
+	public static final List<RegistryEntry<? extends Item>> ITEMS = List.of(
 		//Dynamical Compass
-		new DynamicalCompass(),//FINRT
-	};
+		RegistryEntry.create( DynamicalCompass.registry_name, new DynamicalCompass() )//FINRT
+	);
 	
 	//Dynamical Compass
 	
-	@ObjectHolder( DynamicalCompassMod.MODID + ":" + DynamicalCompass.registry_name )
+	@ObjectHolder(registryName = RegistryKeys.ITEMS, value = DynamicalCompassMod.MODID + ":" + DynamicalCompass.registry_name )
 	public static DynamicalCompass DYNAMICAL_COMPASS;
 }
