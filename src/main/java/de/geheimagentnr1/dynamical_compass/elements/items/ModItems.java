@@ -27,6 +27,7 @@ public class ModItems {
 	
 	//Dynamical Compass
 	
-	@ObjectHolder(registryName = RegistryKeys.ITEMS, value = DynamicalCompassMod.MODID + ":" + DynamicalCompass.registry_name )
+	@ObjectHolder( registryName = RegistryKeys.ITEMS,
+		value = DynamicalCompassMod.MODID + ":" + DynamicalCompass.registry_name )
 	public static DynamicalCompass DYNAMICAL_COMPASS;
 }
