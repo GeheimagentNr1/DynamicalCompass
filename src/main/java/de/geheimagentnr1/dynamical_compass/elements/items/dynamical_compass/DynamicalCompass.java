@@ -1,6 +1,5 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
-import de.geheimagentnr1.dynamical_compass.elements.item_groups.ModItemGroups;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -23,7 +22,7 @@ public class DynamicalCompass extends Item {
 	
 	public DynamicalCompass() {
 		
-		super( new Item.Properties().tab( ModItemGroups.DYNAMICAL_COMPASS ) );
+		super( new Item.Properties() );
 	}
 	
 	@Override
