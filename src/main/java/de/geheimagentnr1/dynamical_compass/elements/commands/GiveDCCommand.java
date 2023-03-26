@@ -46,7 +46,7 @@ public class GiveDCCommand {
 		Collection<ServerPlayer> playerEntities = EntityArgument.getPlayers( context, "targets" );
 		ServerLevel level = DimensionArgument.getDimension( context, "dimension" );
 		Vec2 vecPos = Vec2Argument.getVec2( context, "destination" );
-		BlockPos pos = new BlockPos( vecPos.x, 0, vecPos.y );
+		BlockPos pos = BlockPos.containing( vecPos.x, 0, vecPos.y );
 		boolean locked = BoolArgumentType.getBool( context, "locked" );
 		
 		for( ServerPlayer player : playerEntities ) {
@@ -74,7 +74,7 @@ public class GiveDCCommand {
 				entity = player.drop( stack, false );
 				if( entity != null ) {
 					entity.setNoPickUpDelay();
-					entity.setOwner( player.getUUID() );
+					entity.setTarget( player.getUUID() );
 				}
 			}
 		}
