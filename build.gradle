@@ -227,6 +227,9 @@ curseforge {
         if(Boolean.parseBoolean(usableOnServerSide)) {
             addGameVersion 'Server'
         }
+        relations {
+            it.requiredDependency 'recipes-library'
+        }
 
         mainArtifact(jar) {
             it.displayName = "${mod_display_name} ${mc_version}-${version}"
