@@ -247,5 +247,8 @@ modrinth {
     versionName = "${mod_display_name} ${mc_version}-${version}"
     changelog = rootProject.file("CHANGELOG.md").text
     uploadFile = jar
+    dependencies {
+        required.project 'recipes-library'
+    }
     debugMode = Boolean.parseBoolean("${uploadDebug}")
 }
