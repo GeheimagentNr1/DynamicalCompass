@@ -5,10 +5,10 @@ import de.geheimagentnr1.dynamical_compass.elements.creative_mod_tabs.ModCreativ
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -46,9 +46,21 @@ public class ModEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void handleCreativeModeTabRegisterEvent( CreativeModeTabEvent.Register event ) {
+	public static void handleCreativeModeTabRegisterEvent( RegisterEvent event ) {
 		
-		ModCreativeTabs.CREATIVE_TAB_FACTORIES.forEach( creativeModeTabFactory ->
-			event.registerCreativeModeTab( creativeModeTabFactory.getName(), creativeModeTabFactory ) );
+		if( event.getRegistryKey().equals( Registries.CREATIVE_MODE_TAB ) ) {
+			ModCreativeTabs.CREATIVE_TAB_FACTORIES.forEach( creativeModeTabFactory -> {
+					event.register(
+						Registries.CREATIVE_MODE_TAB,
+						creativeModeTabRegisterHelper -> {
+							creativeModeTabRegisterHelper.register(
+								creativeModeTabFactory.getName(),
+								creativeModeTabFactory.get()
+							);
+						}
+					);
+				}
+			);
+		}
 	}
 }

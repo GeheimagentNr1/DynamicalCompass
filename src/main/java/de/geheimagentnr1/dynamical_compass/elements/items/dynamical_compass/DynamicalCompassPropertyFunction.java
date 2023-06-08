@@ -40,7 +40,7 @@ public class DynamicalCompassPropertyFunction implements ClampedItemPropertyFunc
 		} else {
 			Level level = clientLevel;
 			if( level == null ) {
-				level = entity.level;
+				level = entity.level();
 			}
 			
 			BlockPos blockpos = DynamicalCompassItemStackHelper.isDimensionEqual( stack, level )

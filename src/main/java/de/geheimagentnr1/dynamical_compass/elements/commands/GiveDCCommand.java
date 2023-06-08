@@ -59,7 +59,7 @@ public class GiveDCCommand {
 				if( entity != null ) {
 					entity.makeFakeItem();
 				}
-				player.level.playSound(
+				player.level().playSound(
 					null,
 					player.getX(),
 					player.getY(),
@@ -80,19 +80,25 @@ public class GiveDCCommand {
 		}
 		ItemStack stack = createItemstack( level, pos, locked );
 		if( playerEntities.size() == 1 ) {
-			source.sendSuccess( Component.translatable(
-				"commands.give.success.single",
-				1,
-				stack.getDisplayName(),
-				playerEntities.iterator().next().getDisplayName()
-			), true );
+			source.sendSuccess(
+				() -> Component.translatable(
+					"commands.give.success.single",
+					1,
+					stack.getDisplayName(),
+					playerEntities.iterator().next().getDisplayName()
+				),
+				true
+			);
 		} else {
-			source.sendSuccess( Component.translatable(
-				"commands.give.success.single",
-				1,
-				stack.getDisplayName(),
-				playerEntities.size()
-			), true );
+			source.sendSuccess(
+				() -> Component.translatable(
+					"commands.give.success.single",
+					1,
+					stack.getDisplayName(),
+					playerEntities.size()
+				),
+				true
+			);
 		}
 		return playerEntities.size();
 	}

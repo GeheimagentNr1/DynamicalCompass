@@ -9,9 +9,10 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 
-public interface CreativeModeTabFactory extends Consumer<CreativeModeTab.Builder> {
+public interface CreativeModeTabFactory extends Supplier<CreativeModeTab> {
 	
 	
 	default ResourceLocation getName() {
@@ -23,11 +24,14 @@ public interface CreativeModeTabFactory extends Consumer<CreativeModeTab.Builder
 	
 	String getRegistryName();
 	
-	default void accept( CreativeModeTab.Builder builder ) {
+	@Override
+	default CreativeModeTab get() {
 		
-		builder.title( Component.translatable( "itemGroup." + getRegistryName() ) );
-		builder.icon( this::buildDisplayItemStack );
-		builder.displayItems( this::displayItemsGenerator );
+		return CreativeModeTab.builder()
+			.title( Component.translatable( "itemGroup." + getRegistryName() ) )
+			.icon( this::buildDisplayItemStack )
+			.displayItems( this::displayItemsGenerator )
+			.build();
 	}
 	
 	default ItemStack buildDisplayItemStack() {
