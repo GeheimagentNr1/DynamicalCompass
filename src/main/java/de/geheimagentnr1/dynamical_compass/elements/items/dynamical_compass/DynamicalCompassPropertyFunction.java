@@ -15,21 +15,23 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 
 public class DynamicalCompassPropertyFunction implements ClampedItemPropertyFunction {
 	
 	
+	@NotNull
 	private final DynamicalCompassWobble wobble = new DynamicalCompassWobble();
 	
+	@NotNull
 	private final DynamicalCompassWobble wobbleRandom = new DynamicalCompassWobble();
 	
 	@Override
 	public float unclampedCall(
-		@Nonnull ItemStack stack,
+		@NotNull ItemStack stack,
 		@Nullable ClientLevel clientLevel,
 		@Nullable LivingEntity livingEntity,
 		int seed ) {
@@ -102,7 +104,7 @@ public class DynamicalCompassPropertyFunction implements ClampedItemPropertyFunc
 	}
 	
 	@OnlyIn( Dist.CLIENT )
-	private double getFrameRotation( ItemFrame itemFrame ) {
+	private double getFrameRotation( @NotNull ItemFrame itemFrame ) {
 		
 		Direction direction = itemFrame.getDirection();
 		int rota = direction.getAxis().isVertical() ? 90 * direction.getAxisDirection().getStep() : 0;
@@ -110,7 +112,7 @@ public class DynamicalCompassPropertyFunction implements ClampedItemPropertyFunc
 	}
 	
 	@OnlyIn( Dist.CLIENT )
-	private double getAngleTo( Vec3 vec3, Entity entity ) {
+	private double getAngleTo( @NotNull Vec3 vec3, @NotNull Entity entity ) {
 		
 		return StrictMath.atan2( vec3.z() - entity.getZ(), vec3.x() - entity.getX() );
 	}

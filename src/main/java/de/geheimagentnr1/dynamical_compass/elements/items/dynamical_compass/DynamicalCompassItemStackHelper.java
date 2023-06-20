@@ -6,6 +6,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -13,15 +14,19 @@ import java.util.Objects;
 public class DynamicalCompassItemStackHelper {
 	
 	
+	@NotNull
 	private static final String destinationName = "destination";
 	
+	@NotNull
 	private static final String dimensionName = "destination_dimension";
 	
+	@NotNull
 	private static final String posName = "destination_pos";
 	
+	@NotNull
 	private static final String lockedName = "locked";
 	
-	public static void setDimensionAndPos( ItemStack stack, Level level, BlockPos pos ) {
+	public static void setDimensionAndPos( @NotNull ItemStack stack, @NotNull Level level, @NotNull BlockPos pos ) {
 		
 		CompoundTag compound = new CompoundTag();
 		compound.putString( dimensionName, Objects.requireNonNull( level.dimension().location() ).toString() );
@@ -30,7 +35,7 @@ public class DynamicalCompassItemStackHelper {
 	}
 	
 	//package-private
-	static boolean isDimensionEqual( ItemStack stack, Level level ) {
+	static boolean isDimensionEqual( @NotNull ItemStack stack, @NotNull Level level ) {
 		
 		return Objects.equals(
 			level.dimension().location(),
@@ -41,18 +46,19 @@ public class DynamicalCompassItemStackHelper {
 	}
 	
 	//package-private
-	static BlockPos getDestinationPos( ItemStack stack ) {
+	@NotNull
+	static BlockPos getDestinationPos( @NotNull ItemStack stack ) {
 		
 		return NbtUtils.readBlockPos( stack.getOrCreateTag().getCompound( destinationName ).getCompound( posName ) );
 	}
 	
 	//package-private
-	static boolean isLocked( ItemStack stack ) {
+	static boolean isLocked( @NotNull ItemStack stack ) {
 		
 		return stack.getOrCreateTag().getBoolean( lockedName );
 	}
 	
-	public static void setLocked( ItemStack stack, boolean locked ) {
+	public static void setLocked( @NotNull ItemStack stack, boolean locked ) {
 		
 		stack.getOrCreateTag().putBoolean( lockedName, locked );
 	}

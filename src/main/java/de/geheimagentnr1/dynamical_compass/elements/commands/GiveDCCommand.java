@@ -1,12 +1,12 @@
 package de.geheimagentnr1.dynamical_compass.elements.commands;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import de.geheimagentnr1.dynamical_compass.elements.items.ModItems;
+import de.geheimagentnr1.dynamical_compass.elements.items.ModItemsRegisterFactory;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassItemStackHelper;
+import de.geheimagentnr1.minecraft_forge_api.elements.commands.CommandInterface;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.DimensionArgument;
@@ -21,14 +21,17 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
 
-public class GiveDCCommand {
+public class GiveDCCommand implements CommandInterface {
 	
 	
-	public static void register( CommandDispatcher<CommandSourceStack> dispatcher ) {
+	@NotNull
+	@Override
+	public LiteralArgumentBuilder<CommandSourceStack> build() {
 		
 		LiteralArgumentBuilder<CommandSourceStack> giveDC = Commands.literal( "giveDC" )
 			.requires( source -> source.hasPermission( 2 ) );
@@ -36,11 +39,11 @@ public class GiveDCCommand {
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.dimension() )
 					.then( Commands.argument( "locked", BoolArgumentType.bool() )
-						.executes( GiveDCCommand::giveDC ) ) ) ) );
-		dispatcher.register( giveDC );
+						.executes( this::giveDC ) ) ) ) );
+		return giveDC;
 	}
 	
-	private static int giveDC( CommandContext<CommandSourceStack> context ) throws CommandSyntaxException {
+	private int giveDC( @NotNull CommandContext<CommandSourceStack> context ) throws CommandSyntaxException {
 		
 		CommandSourceStack source = context.getSource();
 		Collection<ServerPlayer> playerEntities = EntityArgument.getPlayers( context, "targets" );
@@ -103,9 +106,10 @@ public class GiveDCCommand {
 		return playerEntities.size();
 	}
 	
-	private static ItemStack createItemstack( ServerLevel level, BlockPos pos, boolean locked ) {
+	@NotNull
+	private ItemStack createItemstack( @NotNull ServerLevel level, @NotNull BlockPos pos, boolean locked ) {
 		
-		ItemStack stack = new ItemStack( ModItems.DYNAMICAL_COMPASS );
+		ItemStack stack = new ItemStack( ModItemsRegisterFactory.DYNAMICAL_COMPASS );
 		DynamicalCompassItemStackHelper.setDimensionAndPos( stack, level, pos );
 		DynamicalCompassItemStackHelper.setLocked( stack, locked );
 		return stack;

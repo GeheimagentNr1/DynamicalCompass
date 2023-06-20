@@ -1,31 +1,3 @@
-repositories {
-    maven {
-        name "local-test-repo"
-        url "file:../ModdingMavenRepositories"
-    }
-    maven {
-        name "minecraft-mods-repo"
-        url "https://secretsoft.jfrog.io/artifactory/minecraft-mods/"
-    }
-}
-
 dependencies {
     runtimeOnly fg.deobf("de.geheimagentnr1.recipes_lib:RecipesLibrary-${minecraft_version}:${rl_version}")
 }
-
-/*
-curseforge {
-    project {
-        id = "${curseforge_project_id}"
-        releaseType = 'release'
-        relations {
-            it.requiredDependency 'recipes-library'
-        }
-    }
-}
-
-modrinth {
-    dependencies {
-        required.project 'recipes-library, test'
-    }
-}*/
