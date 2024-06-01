@@ -1,17 +1,21 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 
@@ -28,28 +32,42 @@ public class DynamicalCompass extends Item {
 	
 	@Override
 	public void appendHoverText(
-		@NotNull ItemStack stack,
-		@Nullable Level level,
-		@NotNull List<Component> tooltip,
-		@NotNull TooltipFlag flag ) {
+		@NotNull ItemStack pStack,
+		@NotNull TooltipContext pContext,
+		@NotNull List<Component> pTooltipComponents,
+		@NotNull TooltipFlag pTooltipFlag ) {
 		
-		tooltip.add( Component.literal( "Locked: " + DynamicalCompassItemStackHelper.isLocked( stack ) )
+		pTooltipComponents.add( Component.literal( "Locked: " + DynamicalCompassItemStackHelper.isLocked( pStack ) )
 			.withStyle( ChatFormatting.GRAY ) );
 	}
 	
 	@NotNull
 	@Override
-	public InteractionResult useOn( @NotNull UseOnContext context ) {
+	public InteractionResult useOn( @NotNull UseOnContext pContext ) {
 		
-		Player player = context.getPlayer();
+		ItemStack stack = pContext.getItemInHand();
+		Player player = pContext.getPlayer();
+		boolean isClientSide = pContext.getLevel().isClientSide();
 		if( player != null && player.isShiftKeyDown() &&
-			!DynamicalCompassItemStackHelper.isLocked( context.getItemInHand() ) ) {
-			DynamicalCompassItemStackHelper.setDimensionAndPos(
-				context.getItemInHand(),
-				context.getLevel(),
-				context.getClickedPos()
-			);
-			return InteractionResult.SUCCESS;
+			!DynamicalCompassItemStackHelper.isLocked( stack ) ) {
+			if (player.hasInfiniteMaterials()) {
+				ItemStack targetStack = stack.transmuteCopy( stack.getItem(), 1);
+				DynamicalCompassItemStackHelper.setDimensionAndPos(
+					targetStack,
+					pContext.getLevel(),
+					pContext.getClickedPos()
+				);
+				if (!player.getInventory().add(targetStack)) {
+					player.drop(targetStack, false);
+				}
+			} else {
+				DynamicalCompassItemStackHelper.setDimensionAndPos(
+					stack,
+					pContext.getLevel(),
+					pContext.getClickedPos()
+				);
+			}
+			return InteractionResult.sidedSuccess( isClientSide );
 		}
 		return InteractionResult.PASS;
 	}

@@ -1,12 +1,11 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
+import de.geheimagentnr1.dynamical_compass.elements.items.ModItemsRegisterFactory;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -14,24 +13,10 @@ import java.util.Objects;
 public class DynamicalCompassItemStackHelper {
 	
 	
-	@NotNull
-	private static final String destinationName = "destination";
-	
-	@NotNull
-	private static final String dimensionName = "destination_dimension";
-	
-	@NotNull
-	private static final String posName = "destination_pos";
-	
-	@NotNull
-	private static final String lockedName = "locked";
-	
 	public static void setDimensionAndPos( @NotNull ItemStack stack, @NotNull Level level, @NotNull BlockPos pos ) {
 		
-		CompoundTag compound = new CompoundTag();
-		compound.putString( dimensionName, Objects.requireNonNull( level.dimension().location() ).toString() );
-		compound.put( posName, NbtUtils.writeBlockPos( pos ) );
-		stack.getOrCreateTag().put( destinationName, compound );
+		stack.set( ModItemsRegisterFactory.DESTINATION_DIMENSION, level.dimension().location() );
+		stack.set( ModItemsRegisterFactory.DESTINATION_POS, pos );
 	}
 	
 	//package-private
@@ -39,27 +24,25 @@ public class DynamicalCompassItemStackHelper {
 		
 		return Objects.equals(
 			level.dimension().location(),
-			ResourceLocation.tryParse( stack.getOrCreateTag()
-				.getCompound( destinationName )
-				.getString( dimensionName ) )
+			stack.get( ModItemsRegisterFactory.DESTINATION_DIMENSION )
 		);
 	}
 	
 	//package-private
-	@NotNull
+	@Nullable
 	static BlockPos getDestinationPos( @NotNull ItemStack stack ) {
 		
-		return NbtUtils.readBlockPos( stack.getOrCreateTag().getCompound( destinationName ).getCompound( posName ) );
+		return stack.get( ModItemsRegisterFactory.DESTINATION_POS );
 	}
 	
 	//package-private
 	static boolean isLocked( @NotNull ItemStack stack ) {
 		
-		return stack.getOrCreateTag().getBoolean( lockedName );
+		return Boolean.TRUE.equals( stack.get( ModItemsRegisterFactory.LOCKED ) );
 	}
 	
 	public static void setLocked( @NotNull ItemStack stack, boolean locked ) {
 		
-		stack.getOrCreateTag().putBoolean( lockedName, locked );
+		stack.set( ModItemsRegisterFactory.LOCKED, locked );
 	}
 }

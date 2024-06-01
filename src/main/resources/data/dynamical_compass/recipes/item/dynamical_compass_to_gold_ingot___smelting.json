@@ -3,7 +3,9 @@
 	"ingredient":  {
 		"item": "dynamical_compass:dynamical_compass"
 	},
-	"result":      "minecraft:gold_ingot",
+	"result": {
+		"id": "minecraft:gold_ingot"
+	},
 	"experience":  1.0,
 	"cookingtime": 200
 }
