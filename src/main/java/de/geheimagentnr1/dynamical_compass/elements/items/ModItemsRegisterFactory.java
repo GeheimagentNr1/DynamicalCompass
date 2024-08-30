@@ -3,21 +3,13 @@ package de.geheimagentnr1.dynamical_compass.elements.items;
 import com.mojang.serialization.Codec;
 import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompass;
-import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassPropertyFunction;
 import de.geheimagentnr1.minecraft_forge_api.elements.items.ItemsRegisterFactory;
 import de.geheimagentnr1.minecraft_forge_api.registry.RegistryEntry;
 import de.geheimagentnr1.minecraft_forge_api.registry.RegistryKeys;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 import org.jetbrains.annotations.NotNull;
 
@@ -83,18 +75,6 @@ public class ModItemsRegisterFactory extends ItemsRegisterFactory {
 				"locked",
 				LOCKED
 			)
-		);
-	}
-	
-	@OnlyIn( Dist.CLIENT )
-	@SubscribeEvent
-	@Override
-	public void handleFMLClientSetupEvent( @NotNull FMLClientSetupEvent event ) {
-		
-		ItemProperties.register(
-			DYNAMICAL_COMPASS,
-			new ResourceLocation( "angle" ),
-			new DynamicalCompassPropertyFunction()
 		);
 	}
 }

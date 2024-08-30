@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 
+@OnlyIn( Dist.CLIENT )
 public class DynamicalCompassPropertyFunction implements ClampedItemPropertyFunction {
 	
 	
