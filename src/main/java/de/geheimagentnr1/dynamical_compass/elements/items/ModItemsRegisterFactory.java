@@ -8,6 +8,7 @@ import de.geheimagentnr1.minecraft_forge_api.registry.RegistryEntry;
 import de.geheimagentnr1.minecraft_forge_api.registry.RegistryKeys;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
@@ -48,6 +49,7 @@ public class ModItemsRegisterFactory extends ItemsRegisterFactory {
 	@NotNull
 	public static final DataComponentType<Boolean> LOCKED = DataComponentType.<Boolean> builder()
 		.persistent( Codec.BOOL )
+		.networkSynchronized( ByteBufCodecs.BOOL )
 		.build();
 	
 	@NotNull
