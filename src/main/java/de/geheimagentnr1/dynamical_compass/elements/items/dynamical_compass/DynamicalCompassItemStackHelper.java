@@ -15,8 +15,8 @@ public class DynamicalCompassItemStackHelper {
 	
 	public static void setDimensionAndPos( @NotNull ItemStack stack, @NotNull Level level, @NotNull BlockPos pos ) {
 		
-		stack.set( ModItemsRegisterFactory.DESTINATION_DIMENSION, level.dimension().location() );
-		stack.set( ModItemsRegisterFactory.DESTINATION_POS, pos );
+		stack.set( ModItemsRegisterFactory.DESTINATION_DIMENSION.get(), level.dimension().location() );
+		stack.set( ModItemsRegisterFactory.DESTINATION_POS.get(), pos );
 	}
 	
 	//package-private
@@ -24,7 +24,7 @@ public class DynamicalCompassItemStackHelper {
 		
 		return Objects.equals(
 			level.dimension().location(),
-			stack.get( ModItemsRegisterFactory.DESTINATION_DIMENSION )
+			stack.get( ModItemsRegisterFactory.DESTINATION_DIMENSION.get() )
 		);
 	}
 	
@@ -32,17 +32,17 @@ public class DynamicalCompassItemStackHelper {
 	@Nullable
 	static BlockPos getDestinationPos( @NotNull ItemStack stack ) {
 		
-		return stack.get( ModItemsRegisterFactory.DESTINATION_POS );
+		return stack.get( ModItemsRegisterFactory.DESTINATION_POS.get() );
 	}
 	
 	//package-private
 	static boolean isLocked( @NotNull ItemStack stack ) {
 		
-		return Boolean.TRUE.equals( stack.get( ModItemsRegisterFactory.LOCKED ) );
+		return Boolean.TRUE.equals( stack.get( ModItemsRegisterFactory.LOCKED.get() ) );
 	}
 	
 	public static void setLocked( @NotNull ItemStack stack, boolean locked ) {
 		
-		stack.set( ModItemsRegisterFactory.LOCKED, locked );
+		stack.set( ModItemsRegisterFactory.LOCKED.get(), locked );
 	}
 }

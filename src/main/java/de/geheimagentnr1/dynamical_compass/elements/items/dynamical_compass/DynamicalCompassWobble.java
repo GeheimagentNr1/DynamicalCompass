@@ -1,8 +1,8 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 
 //package-private

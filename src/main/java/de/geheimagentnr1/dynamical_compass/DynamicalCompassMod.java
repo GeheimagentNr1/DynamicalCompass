@@ -4,36 +4,37 @@ import de.geheimagentnr1.dynamical_compass.elements.commands.ModCommandsRegistry
 import de.geheimagentnr1.dynamical_compass.elements.creative_mod_tabs.ModCreativeModeTabRegisterFactory;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItemPropertyFunctionsRegisterFactory;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItemsRegisterFactory;
-import de.geheimagentnr1.minecraft_forge_api.AbstractMod;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 import org.jetbrains.annotations.NotNull;
 
 
 @Mod( DynamicalCompassMod.MODID )
-public class DynamicalCompassMod extends AbstractMod {
+public class DynamicalCompassMod {
 	
 	
 	@NotNull
 	public static final String MODID = "dynamical_compass";
 	
-	@NotNull
-	@Override
-	public String getModId() {
+	public DynamicalCompassMod( @NotNull IEventBus modEventBus, @NotNull ModContainer modContainer ) {
 		
-		return MODID;
-	}
-	
-	@Override
-	protected void initMod() {
+		ModCommandsRegistryFactory modCommandsRegistryFactory = new ModCommandsRegistryFactory();
+		modCommandsRegistryFactory.register( modEventBus );
 		
-		registerEventHandler( new ModCommandsRegistryFactory() );
-		ModItemsRegisterFactory modItemsRegisterFactory = registerEventHandler( new ModItemsRegisterFactory() );
-		DistExecutor.safeRunWhenOn(
-			Dist.CLIENT,
-			() -> () -> registerEventHandler( new ModItemPropertyFunctionsRegisterFactory() )
-		);
-		registerEventHandler( new ModCreativeModeTabRegisterFactory( modItemsRegisterFactory ) );
+		ModItemsRegisterFactory modItemsRegisterFactory = new ModItemsRegisterFactory();
+		modItemsRegisterFactory.register( modEventBus );
+		
+		if( FMLEnvironment.dist == Dist.CLIENT ) {
+			ModItemPropertyFunctionsRegisterFactory modItemPropertyFunctionsRegisterFactory =
+				new ModItemPropertyFunctionsRegisterFactory();
+			modItemPropertyFunctionsRegisterFactory.register( modEventBus );
+		}
+		
+		ModCreativeModeTabRegisterFactory modCreativeModeTabRegisterFactory =
+			new ModCreativeModeTabRegisterFactory( modItemsRegisterFactory );
+		modCreativeModeTabRegisterFactory.register( modEventBus );
 	}
 }

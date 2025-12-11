@@ -3,22 +3,20 @@ package de.geheimagentnr1.dynamical_compass.elements.items;
 import com.mojang.serialization.Codec;
 import de.geheimagentnr1.dynamical_compass.DynamicalCompassMod;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompass;
-import de.geheimagentnr1.minecraft_forge_api.elements.items.ItemsRegisterFactory;
-import de.geheimagentnr1.minecraft_forge_api.registry.RegistryEntry;
-import de.geheimagentnr1.minecraft_forge_api.registry.RegistryKeys;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ObjectHolder;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.function.Supplier;
 
 
-@SuppressWarnings( "StaticNonFinalField" )
-public class ModItemsRegisterFactory extends ItemsRegisterFactory {
+public class ModItemsRegisterFactory {
 	
 	//TODO:
 	// F - Funktion fertig
@@ -27,56 +25,59 @@ public class ModItemsRegisterFactory extends ItemsRegisterFactory {
 	// R - Rezept fertig
 	// T - Tags fertig
 	
+	@NotNull
+	private static final DeferredRegister<Item> ITEMS =
+		DeferredRegister.create( Registries.ITEM, DynamicalCompassMod.MODID );
+	
+	@NotNull
+	private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
+		DeferredRegister.create( Registries.DATA_COMPONENT_TYPE, DynamicalCompassMod.MODID );
+	
 	//Dynamical Compass
 	
-	@ObjectHolder( registryName = RegistryKeys.ITEMS,
-		value = DynamicalCompassMod.MODID + ":" + DynamicalCompass.registry_name )
-	public static DynamicalCompass DYNAMICAL_COMPASS;
+	@NotNull
+	public static final Supplier<DynamicalCompass> DYNAMICAL_COMPASS =
+		ITEMS.register( DynamicalCompass.registry_name, DynamicalCompass::new );
 	
 	@NotNull
-	public static final DataComponentType<ResourceLocation> DESTINATION_DIMENSION =
-		DataComponentType.<ResourceLocation> builder()
-			.persistent( ResourceLocation.CODEC )
-			.networkSynchronized( ResourceLocation.STREAM_CODEC )
-			.build();
-	
-	@NotNull
-	public static final DataComponentType<BlockPos> DESTINATION_POS = DataComponentType.<BlockPos> builder()
-		.persistent( BlockPos.CODEC )
-		.networkSynchronized( BlockPos.STREAM_CODEC )
-		.build();
-	
-	@NotNull
-	public static final DataComponentType<Boolean> LOCKED = DataComponentType.<Boolean> builder()
-		.persistent( Codec.BOOL )
-		.networkSynchronized( ByteBufCodecs.BOOL )
-		.build();
-	
-	@NotNull
-	@Override
-	protected List<RegistryEntry<Item>> items() {
-		
-		return List.of(//FINRT
-			RegistryEntry.create( DynamicalCompass.registry_name, new DynamicalCompass() )//FINRT
+	public static final Supplier<DataComponentType<ResourceLocation>> DESTINATION_DIMENSION =
+		DATA_COMPONENT_TYPES.register(
+			"destination_dimension",
+			() -> DataComponentType.<ResourceLocation>builder()
+				.persistent( ResourceLocation.CODEC )
+				.networkSynchronized( ResourceLocation.STREAM_CODEC )
+				.build()
 		);
+	
+	@NotNull
+	public static final Supplier<DataComponentType<BlockPos>> DESTINATION_POS =
+		DATA_COMPONENT_TYPES.register(
+			"destination_pos",
+			() -> DataComponentType.<BlockPos>builder()
+				.persistent( BlockPos.CODEC )
+				.networkSynchronized( BlockPos.STREAM_CODEC )
+				.build()
+		);
+	
+	@NotNull
+	public static final Supplier<DataComponentType<Boolean>> LOCKED =
+		DATA_COMPONENT_TYPES.register(
+			"locked",
+			() -> DataComponentType.<Boolean>builder()
+				.persistent( Codec.BOOL )
+				.networkSynchronized( ByteBufCodecs.BOOL )
+				.build()
+		);
+	
+	public void register( @NotNull IEventBus modEventBus ) {
+		
+		ITEMS.register( modEventBus );
+		DATA_COMPONENT_TYPES.register( modEventBus );
 	}
 	
-	@Override
-	protected @NotNull List<RegistryEntry<DataComponentType<?>>> dataComponentTypes() {
+	@NotNull
+	public Supplier<DynamicalCompass> getDynamicalCompass() {
 		
-		return List.of(
-			RegistryEntry.create(
-				"destination_dimension",
-				DESTINATION_DIMENSION
-			),
-			RegistryEntry.create(
-				"destination_pos",
-				DESTINATION_POS
-			),
-			RegistryEntry.create(
-				"locked",
-				LOCKED
-			)
-		);
+		return DYNAMICAL_COMPASS;
 	}
 }

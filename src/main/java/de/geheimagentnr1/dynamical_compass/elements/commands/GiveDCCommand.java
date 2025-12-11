@@ -6,7 +6,6 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItemsRegisterFactory;
 import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassItemStackHelper;
-import de.geheimagentnr1.minecraft_forge_api.elements.commands.CommandInterface;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.DimensionArgument;
@@ -26,11 +25,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 
-public class GiveDCCommand implements CommandInterface {
+public class GiveDCCommand {
 	
 	
 	@NotNull
-	@Override
 	public LiteralArgumentBuilder<CommandSourceStack> build() {
 		
 		LiteralArgumentBuilder<CommandSourceStack> giveDC = Commands.literal( "giveDC" )
@@ -109,7 +107,7 @@ public class GiveDCCommand implements CommandInterface {
 	@NotNull
 	private ItemStack createItemstack( @NotNull ServerLevel level, @NotNull BlockPos pos, boolean locked ) {
 		
-		ItemStack stack = new ItemStack( ModItemsRegisterFactory.DYNAMICAL_COMPASS );
+		ItemStack stack = new ItemStack( ModItemsRegisterFactory.DYNAMICAL_COMPASS.get() );
 		DynamicalCompassItemStackHelper.setDimensionAndPos( stack, level, pos );
 		DynamicalCompassItemStackHelper.setLocked( stack, locked );
 		return stack;
