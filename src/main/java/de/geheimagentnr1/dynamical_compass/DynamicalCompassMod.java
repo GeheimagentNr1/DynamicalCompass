@@ -8,7 +8,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -27,7 +27,7 @@ public class DynamicalCompassMod {
 		ModItemsRegisterFactory modItemsRegisterFactory = new ModItemsRegisterFactory();
 		modItemsRegisterFactory.register( modEventBus );
 		
-		if( FMLEnvironment.dist == Dist.CLIENT ) {
+		if( FMLLoader.getDist() == Dist.CLIENT ) {
 			ModItemPropertyFunctionsRegisterFactory modItemPropertyFunctionsRegisterFactory =
 				new ModItemPropertyFunctionsRegisterFactory();
 			modItemPropertyFunctionsRegisterFactory.register( modEventBus );
