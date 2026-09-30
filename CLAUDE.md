@@ -12,6 +12,7 @@
 | `develop_1.21.1` | 1.21.1 | `[1.21.1,1.21.10]` (Release 1.21.1-4.0.1, lädt praktisch nur auf 1.21.1) | 21.1.x | `ItemProperties` + eigene `DynamicalCompassPropertyFunction` |
 | `develop_1.21.2` | 1.21.2 - 1.21.3 | `[1.21.2,1.21.4)` | `21.2.1-beta` | wie 1.21.1, zusätzlich wird `minecraft:lodestone_tracker` gesetzt |
 | `develop_1.21.4` | 1.21.4 - 1.21.10 | `[1.21.4,1.21.11)` | `21.4.158` | kein Client-Code: `assets/dynamical_compass/items/dynamical_compass.json` mit Vanilla `minecraft:compass`, Ziel `lodestone` |
+| `develop_1.21.11` | 1.21.11 | `[1.21.11,1.21.12)` | `21.11.45` | wie 1.21.4; `ResourceLocation` → `Identifier`, `Commands.hasPermission(..)`, `/giveDC`-Sound wieder über `Level.playSound(null, ..)` (`playNotifySound` entfernt) |
 
 **Ziel-Speicherung:** Eigene Komponenten `destination_dimension`, `destination_pos`, `locked` (Rezepte und Logik), ab `develop_1.21.2` zusätzlich gespiegelt in `minecraft:lodestone_tracker` mit `tracked=false` (`DynamicalCompassItemStackHelper.updateLodestoneTracker`). `tracked=false` = kein Lodestone an der Position nötig; `LodestoneTracker.tick` läuft ohnehin nur für `CompassItem`. Ab `develop_1.21.4` liest das Vanilla-Item-Model daraus die Nadelrichtung; Kompasse aus älteren Welten bekommen den Tracker beim Login (`DynamicalCompassEventHandler`, nur Spielerinventar).
 

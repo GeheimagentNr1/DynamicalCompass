@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
@@ -38,12 +38,12 @@ public class ModItemsRegisterFactory {
 		ITEMS.registerItem( DynamicalCompass.registry_name, DynamicalCompass::new );
 	
 	@NotNull
-	public static final Supplier<DataComponentType<ResourceLocation>> DESTINATION_DIMENSION =
+	public static final Supplier<DataComponentType<Identifier>> DESTINATION_DIMENSION =
 		DATA_COMPONENT_TYPES.register(
 			"destination_dimension",
-			() -> DataComponentType.<ResourceLocation>builder()
-				.persistent( ResourceLocation.CODEC )
-				.networkSynchronized( ResourceLocation.STREAM_CODEC )
+			() -> DataComponentType.<Identifier>builder()
+				.persistent( Identifier.CODEC )
+				.networkSynchronized( Identifier.STREAM_CODEC )
 				.build()
 		);
 	

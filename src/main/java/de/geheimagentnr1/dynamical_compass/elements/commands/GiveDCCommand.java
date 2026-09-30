@@ -32,7 +32,7 @@ public class GiveDCCommand {
 	public LiteralArgumentBuilder<CommandSourceStack> build() {
 		
 		LiteralArgumentBuilder<CommandSourceStack> giveDC = Commands.literal( "giveDC" )
-			.requires( source -> source.hasPermission( 2 ) );
+			.requires( Commands.hasPermission( Commands.LEVEL_GAMEMASTERS ) );
 		giveDC.then( Commands.argument( "targets", EntityArgument.players() )
 			.then( Commands.argument( "destination", Vec2Argument.vec2() )
 				.then( Commands.argument( "dimension", DimensionArgument.dimension() )
@@ -60,8 +60,11 @@ public class GiveDCCommand {
 				if( entity != null ) {
 					entity.makeFakeItem();
 				}
-				//playNotifySound instead of Level.playSound: its first parameter changed from Player to Entity in 1.21.5
-				player.playNotifySound(
+				player.level().playSound(
+					null,
+					player.getX(),
+					player.getY(),
+					player.getZ(),
 					SoundEvents.ITEM_PICKUP,
 					SoundSource.PLAYERS,
 					0.2F,

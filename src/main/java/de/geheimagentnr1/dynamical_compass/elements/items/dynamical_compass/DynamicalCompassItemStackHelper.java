@@ -5,8 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.level.Level;
@@ -22,7 +22,7 @@ public class DynamicalCompassItemStackHelper {
 	
 	public static void setDimensionAndPos( @NotNull ItemStack stack, @NotNull Level level, @NotNull BlockPos pos ) {
 		
-		stack.set( ModItemsRegisterFactory.DESTINATION_DIMENSION.get(), level.dimension().location() );
+		stack.set( ModItemsRegisterFactory.DESTINATION_DIMENSION.get(), level.dimension().identifier() );
 		stack.set( ModItemsRegisterFactory.DESTINATION_POS.get(), pos );
 		updateLodestoneTracker( stack );
 	}
@@ -31,7 +31,7 @@ public class DynamicalCompassItemStackHelper {
 	//tracked=false: the target is kept without a lodestone at the position.
 	public static void updateLodestoneTracker( @NotNull ItemStack stack ) {
 
-		ResourceLocation dimension = stack.get( ModItemsRegisterFactory.DESTINATION_DIMENSION.get() );
+		Identifier dimension = stack.get( ModItemsRegisterFactory.DESTINATION_DIMENSION.get() );
 		BlockPos pos = stack.get( ModItemsRegisterFactory.DESTINATION_POS.get() );
 		if( dimension == null || pos == null ) {
 			return;
@@ -49,7 +49,7 @@ public class DynamicalCompassItemStackHelper {
 	static boolean isDimensionEqual( @NotNull ItemStack stack, @NotNull Level level ) {
 		
 		return Objects.equals(
-			level.dimension().location(),
+			level.dimension().identifier(),
 			stack.get( ModItemsRegisterFactory.DESTINATION_DIMENSION.get() )
 		);
 	}
