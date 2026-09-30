@@ -5,7 +5,7 @@
 **Dynamical Compass** ist ein NeoForge Minecraft Mod. Fügt einen Kompass hinzu, der auf eine benutzerdefinierte Position zeigt (Shift-Rechtsklick auf einen Block, `/giveDC`; per Rezept mit Glasscheibe sperrbar).
 - **Mod ID**: `dynamical_compass`
 - **Package**: `de.geheimagentnr1.dynamical_compass`
-- **Java Version**: 21
+- **Java Version**: 21 (26.x-Branches: 25, `jdk-25.0.4.7-hotspot`)
 
 | Branch | MC | Range | NeoForge (kompiliert gegen) | Nadel-Rendering |
 |---|---|---|---|---|
@@ -13,6 +13,8 @@
 | `develop_1.21.2` | 1.21.2 - 1.21.3 | `[1.21.2,1.21.4)` | `21.2.1-beta` | wie 1.21.1, zusätzlich wird `minecraft:lodestone_tracker` gesetzt |
 | `develop_1.21.4` | 1.21.4 - 1.21.10 | `[1.21.4,1.21.11)` | `21.4.158` | kein Client-Code: `assets/dynamical_compass/items/dynamical_compass.json` mit Vanilla `minecraft:compass`, Ziel `lodestone` |
 | `develop_1.21.11` | 1.21.11 | `[1.21.11,1.21.12)` | `21.11.45` | wie 1.21.4; `ResourceLocation` → `Identifier`, `Commands.hasPermission(..)`, `/giveDC`-Sound wieder über `Level.playSound(null, ..)` (`playNotifySound` entfernt) |
+| `develop_26.1` | 26.1 - 26.2 | `[26.1,26.3)` | `26.1.0.19-beta` (Java 25) | wie 1.21.11; Tooling Java 25 / Gradle 9.2.1 / moddev 2.0.147 / Lombok 1.18.48 |
+| `develop_26.3` | 26.3 | `[26.3,27)` | `26.3.0.36-beta` (Java 25) | wie 26.1; `Player.drop( stack, false, Prediction.* )` (26.3 neu): `PREDICTED` bei der Creative-Kopie (wie Vanilla-`CompassItem`), `SERVER_ONLY` in `/giveDC`. Bewusst eigenes Jar statt `spawnAtLocation` als Cross-fix, damit Werfer/Drop-Verhalten wie bisher bleiben |
 
 **Ziel-Speicherung:** Eigene Komponenten `destination_dimension`, `destination_pos`, `locked` (Rezepte und Logik), ab `develop_1.21.2` zusätzlich gespiegelt in `minecraft:lodestone_tracker` mit `tracked=false` (`DynamicalCompassItemStackHelper.updateLodestoneTracker`). `tracked=false` = kein Lodestone an der Position nötig; `LodestoneTracker.tick` läuft ohnehin nur für `CompassItem`. Ab `develop_1.21.4` liest das Vanilla-Item-Model daraus die Nadelrichtung; Kompasse aus älteren Welten bekommen den Tracker beim Login (`DynamicalCompassEventHandler`, nur Spielerinventar).
 
