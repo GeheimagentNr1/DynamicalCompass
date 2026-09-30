@@ -3,9 +3,11 @@ package de.geheimagentnr1.dynamical_compass;
 import de.geheimagentnr1.dynamical_compass.elements.commands.ModCommandsRegistryFactory;
 import de.geheimagentnr1.dynamical_compass.elements.creative_mod_tabs.ModCreativeModeTabRegisterFactory;
 import de.geheimagentnr1.dynamical_compass.elements.items.ModItemsRegisterFactory;
+import de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass.DynamicalCompassEventHandler;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -27,5 +29,7 @@ public class DynamicalCompassMod {
 		ModCreativeModeTabRegisterFactory modCreativeModeTabRegisterFactory =
 			new ModCreativeModeTabRegisterFactory( modItemsRegisterFactory );
 		modCreativeModeTabRegisterFactory.register( modEventBus );
+
+		NeoForge.EVENT_BUS.register( new DynamicalCompassEventHandler() );
 	}
 }
