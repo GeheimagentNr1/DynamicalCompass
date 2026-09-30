@@ -1,5 +1,6 @@
 package de.geheimagentnr1.dynamical_compass.elements.items.dynamical_compass;
 
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -37,7 +38,7 @@ public class DynamicalCompass extends Item {
 					pContext.getClickedPos()
 				);
 				if( !player.getInventory().add( targetStack ) ) {
-					player.drop( targetStack, false );
+					player.drop( targetStack, false, Prediction.PREDICTED );
 				}
 			} else {
 				DynamicalCompassItemStackHelper.setDimensionAndPos(

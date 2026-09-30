@@ -1,4 +1,4 @@
-Add compatibility for minecraft version 26.1, 26.1.1, 26.1.2, 26.2
+Add compatibility for minecraft version 26.3
 
 - Requires RecipesLibrary 4.0.1 or newer.
 - The needle is rendered by the vanilla compass item model. The compass stores its target additionally as vanilla `minecraft:lodestone_tracker` (not tracked, no lodestone needed).
