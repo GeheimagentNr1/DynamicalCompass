@@ -60,11 +60,8 @@ public class GiveDCCommand {
 				if( entity != null ) {
 					entity.makeFakeItem();
 				}
-				player.level().playSound(
-					null,
-					player.getX(),
-					player.getY(),
-					player.getZ(),
+				//playNotifySound instead of Level.playSound: its first parameter changed from Player to Entity in 1.21.5
+				player.playNotifySound(
 					SoundEvents.ITEM_PICKUP,
 					SoundSource.PLAYERS,
 					0.2F,

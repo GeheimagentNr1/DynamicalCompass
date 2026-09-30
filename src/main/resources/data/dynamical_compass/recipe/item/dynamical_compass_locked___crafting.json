@@ -2,7 +2,7 @@
 	"type": "recipes_lib:crafting_shapeless_components",
 	"ingredients": [
 		{
-			"type": "recipes_lib:components",
+			"neoforge:ingredient_type": "recipes_lib:components",
 			"item": {
 				"id": "dynamical_compass:dynamical_compass",
 				"components": {
@@ -11,9 +11,7 @@
 			},
 			"matchType": "CONTAINS_NONE"
 		},
-		{
-			"item": "minecraft:glass_pane"
-		}
+		"minecraft:glass_pane"
 	],
 	"result": {
 		"item": "dynamical_compass:dynamical_compass",

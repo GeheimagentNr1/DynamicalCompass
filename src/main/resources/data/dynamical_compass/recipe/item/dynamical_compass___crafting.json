@@ -6,12 +6,8 @@
 		" G "
 	],
 	"key":     {
-		"G": {
-			"item": "minecraft:gold_ingot"
-		},
-		"L": {
-			"item": "minecraft:lapis_lazuli"
-		}
+		"G": "minecraft:gold_ingot",
+		"L": "minecraft:lapis_lazuli"
 	},
 	"result":  {
 		"id": "dynamical_compass:dynamical_compass"

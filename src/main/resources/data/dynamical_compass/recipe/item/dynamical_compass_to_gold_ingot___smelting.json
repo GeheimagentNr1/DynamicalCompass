@@ -1,8 +1,6 @@
 {
 	"type":        "minecraft:smelting",
-	"ingredient":  {
-		"item": "dynamical_compass:dynamical_compass"
-	},
+	"ingredient":  "dynamical_compass:dynamical_compass",
 	"result": {
 		"id": "minecraft:gold_ingot"
 	},

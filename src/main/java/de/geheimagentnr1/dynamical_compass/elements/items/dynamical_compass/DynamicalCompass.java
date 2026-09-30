@@ -19,9 +19,9 @@ public class DynamicalCompass extends Item {
 	@NotNull
 	public static final String registry_name = "dynamical_compass";
 	
-	public DynamicalCompass() {
-		
-		super( new Item.Properties() );
+	public DynamicalCompass( @NotNull Item.Properties properties ) {
+
+		super( properties );
 	}
 	
 	@Override
@@ -41,7 +41,6 @@ public class DynamicalCompass extends Item {
 		
 		ItemStack stack = pContext.getItemInHand();
 		Player player = pContext.getPlayer();
-		boolean isClientSide = pContext.getLevel().isClientSide();
 		if( player != null && player.isShiftKeyDown() &&
 			!DynamicalCompassItemStackHelper.isLocked( stack ) ) {
 			if( player.hasInfiniteMaterials() ) {
@@ -61,7 +60,7 @@ public class DynamicalCompass extends Item {
 					pContext.getClickedPos()
 				);
 			}
-			return InteractionResult.sidedSuccess( isClientSide );
+			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;
 	}

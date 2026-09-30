@@ -63,8 +63,7 @@ public class DynamicalCompassPropertyFunction implements ClampedItemPropertyFunc
 						rota = getFrameRotation( (ItemFrame)entity );
 					} else {
 						if( entity instanceof ItemEntity ) {
-							rota = 180.0F -
-								( (ItemEntity)entity ).getSpin( 0.5F ) / ( (float)Math.PI * 2.0F ) * 360.0F;
+							rota = entity.getVisualRotationYInDegrees();
 						} else {
 							if( livingEntity != null ) {
 								rota = livingEntity.yBodyRot;

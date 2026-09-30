@@ -8,7 +8,6 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
@@ -26,8 +25,7 @@ public class ModItemsRegisterFactory {
 	// T - Tags fertig
 	
 	@NotNull
-	private static final DeferredRegister<Item> ITEMS =
-		DeferredRegister.create( Registries.ITEM, DynamicalCompassMod.MODID );
+	private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems( DynamicalCompassMod.MODID );
 	
 	@NotNull
 	private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
@@ -37,7 +35,7 @@ public class ModItemsRegisterFactory {
 	
 	@NotNull
 	public static final Supplier<DynamicalCompass> DYNAMICAL_COMPASS =
-		ITEMS.register( DynamicalCompass.registry_name, DynamicalCompass::new );
+		ITEMS.registerItem( DynamicalCompass.registry_name, DynamicalCompass::new );
 	
 	@NotNull
 	public static final Supplier<DataComponentType<ResourceLocation>> DESTINATION_DIMENSION =
