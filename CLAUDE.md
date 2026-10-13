@@ -6,7 +6,7 @@ Diese Datei ist auf allen `develop_*`-Branches identisch; Quelle: `../Docs/mod-c
 
 ## Versionen
 
-- Forge: `develop_1.14.4` bis `develop_1.21`, dazu `develop_1.21.1_forge` (letzter Forge-Stand 1.21.1). `develop_1.21.3` ist ein alter, nur lokaler Forge-Stand, kein NeoForge-Port.
+- Forge: `develop_1.14.4` bis `develop_1.21`, dazu `develop_1.21.1_forge` (letzter Forge-Stand 1.21.1).
 - NeoForge: `develop_1.21.1` (lädt wegen RecipesLibrary praktisch nur auf 1.21.1), `develop_1.21.2` (1.21.2 - 1.21.3), `develop_1.21.4` (1.21.4 - 1.21.10), `develop_1.21.11`, `develop_26.1` (26.1 - 26.2), `develop_26.3`.
 - Jar-Grenzen: 1.21.4 (Item-Model-Umbau), 1.21.11 (`Identifier`, Rechtesystem, `playNotifySound` entfernt), 26.3 (`Player.drop(.., Prediction)`). Ranges und Tags: [`../Docs/VERSIONEN.md`](../Docs/VERSIONEN.md).
 
